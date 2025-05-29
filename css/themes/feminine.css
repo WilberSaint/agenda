@@ -1,0 +1,597 @@
+/* ===== TEMA ELEGANTE - FEMININE ===== */
+
+/* Sobrescribir variables base con paleta rosa-violeta */
+:root {
+  /* Colores principales */
+  --primary-color: #F8BBD9;
+  --secondary-color: #E4C1F9;
+  --tertiary-color: #D0A9F5;
+  --accent-color: #C8A8E9;
+  
+  /* Backgrounds */
+  --background-color: #FEFCFF;
+  --background-secondary: #FFE5F1;
+  --background-tertiary: #F3E8FF;
+  
+  /* Textos */
+  --text-color: #6B46C1;
+  --text-secondary: #8B5CF6;
+  --text-muted: #A78BFA;
+  --text-light: #C4B5FD;
+  
+  /* Bordes y sombras */
+  --border-color: #F4A6CD;
+  --border-hover: #E4C1F9;
+  --shadow-color: rgba(212, 169, 245, 0.2);
+  --shadow-hover: rgba(212, 169, 245, 0.3);
+  
+  /* Estados */
+  --success-color: #D8F5D8;
+  --warning-color: #FFF4E6;
+  --danger-color: #FFE6E6;
+  --info-color: #E6F3FF;
+  
+  /* Gradientes */
+  --gradient-primary: linear-gradient(135deg, #F8BBD9, #E4C1F9);
+  --gradient-secondary: linear-gradient(135deg, #E4C1F9, #D0A9F5);
+  --gradient-accent: linear-gradient(135deg, #C8A8E9, #B19CD9);
+  --gradient-background: linear-gradient(135deg, #FFE5F1, #F3E8FF);
+}
+
+/* ===== FONDOS Y LAYOUTS ===== */
+
+body {
+  background: var(--gradient-background);
+}
+
+.app-header {
+  background: var(--gradient-primary) !important;
+  color: white;
+}
+
+.sidebar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-right: 1px solid var(--border-color);
+}
+
+/* ===== COMPONENTES PRINCIPALES ===== */
+
+.app-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px var(--shadow-color);
+  backdrop-filter: blur(10px);
+}
+
+.app-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 12px 40px var(--shadow-hover);
+  transform: translateY(-5px);
+}
+
+.btn-gradient {
+  background: var(--gradient-primary);
+  box-shadow: 0 4px 15px rgba(212, 169, 245, 0.4);
+  color: white;
+}
+
+.btn-gradient:hover {
+  background: var(--gradient-secondary);
+  box-shadow: 0 6px 20px rgba(212, 169, 245, 0.5);
+  color: white;
+}
+
+/* ===== NAVEGACIÓN ===== */
+
+.sidebar .nav-link.active {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(212, 169, 245, 0.3);
+}
+
+.sidebar .nav-link:hover:not(.active):not(.disabled) {
+  background: var(--background-secondary);
+  color: var(--text-color);
+}
+
+/* ===== HEADERS DE CARDS ===== */
+
+.card-header-primary {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.card-header-success {
+  background: linear-gradient(135deg, var(--success-color), #C8E6C9);
+  color: var(--text-color);
+}
+
+.card-header-info {
+  background: linear-gradient(135deg, var(--info-color), #E3F2FD);
+  color: var(--text-color);
+}
+
+.card-header-warning {
+  background: linear-gradient(135deg, var(--warning-color), #FFF3E0);
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* ===== TABS ===== */
+
+.app-tab.active {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.app-tab:hover:not(.active) {
+  background: var(--background-secondary);
+  color: var(--text-color);
+}
+
+/* ===== TASKS - PRIORIDADES ===== */
+
+.task-item {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 246, 255, 0.9));
+  border: 2px solid transparent;
+  backdrop-filter: blur(10px);
+}
+
+/* Prioridad Urgente - Rosa Intenso */
+.task-item.priority-urgente {
+  background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+  border-left: 6px solid #FF6B9D;
+}
+
+.task-item.priority-urgente:hover {
+  background: linear-gradient(135deg, #FFCDD2, #FFAAB3);
+  box-shadow: 0 8px 30px rgba(255, 107, 157, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Prioridad Alta - Rosa Suave */
+.task-item.priority-alta {
+  background: linear-gradient(135deg, #FCE4EC, #F8BBD0);
+  border-left: 6px solid #F48FB1;
+}
+
+.task-item.priority-alta:hover {
+  background: linear-gradient(135deg, #F8BBD0, #F06292);
+  box-shadow: 0 8px 30px rgba(244, 143, 177, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Prioridad Media - Violeta Suave */
+.task-item.priority-media {
+  background: linear-gradient(135deg, #F3E5F5, #E1BEE7);
+  border-left: 6px solid #CE93D8;
+}
+
+.task-item.priority-media:hover {
+  background: linear-gradient(135deg, #E1BEE7, #CE93D8);
+  box-shadow: 0 8px 30px rgba(206, 147, 216, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Prioridad Baja - Lavanda Suave */
+.task-item.priority-baja {
+  background: linear-gradient(135deg, #EDE7F6, #D1C4E9);
+  border-left: (6px solid #B39DDB);
+}
+
+.task-item.priority-baja:hover {
+  background: linear-gradient(135deg, #D1C4E9, #B39DDB);
+  box-shadow: 0 8px 30px rgba(179, 157, 219, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Tarea Completada */
+.task-item.completed {
+  opacity: 0.8;
+  background: linear-gradient(135deg, #F5F5F5, #EEEEEE) !important;
+  border-left: 6px solid #BDBDBD !important;
+}
+
+/* Tarea Vencida */
+.task-item.overdue {
+  background: linear-gradient(135deg, #FFEBEE, #FFCDD2) !important;
+  border-left: 6px solid #F44336 !important;
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  animation: pulse 2s infinite;
+}
+
+/* ===== BADGES ===== */
+
+/* Badges de Categoría */
+.category-personal { 
+  background: linear-gradient(135deg, #FFE5F1, #F8BBD9); 
+  color: #E91E63; 
+}
+
+.category-trabajo { 
+  background: linear-gradient(135deg, #F3E8FF, #E4C1F9); 
+  color: #7C3AED; 
+}
+
+.category-compras { 
+  background: linear-gradient(135deg, #E8F5E8, #C8E6C9); 
+  color: #2E7D32; 
+}
+
+.category-comida { 
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2); 
+  color: #F57C00; 
+}
+
+.category-pagos { 
+  background: linear-gradient(135deg, #FFEBEE, #FFCDD2); 
+  color: #D32F2F; 
+}
+
+.category-citas { 
+  background: linear-gradient(135deg, #F1F8E9, #DCEDC8); 
+  color: #689F38; 
+}
+
+.category-otros { 
+  background: linear-gradient(135deg, #F5F5F5, #EEEEEE); 
+  color: #616161; 
+}
+
+/* Badges de Prioridad */
+.priority-urgente { 
+  background: linear-gradient(135deg, #FFEBEE, #FFCDD2); 
+  color: #C62828; 
+}
+
+.priority-alta { 
+  background: linear-gradient(135deg, #FFF3E0, #FFE0B2); 
+  color: #EF6C00; 
+}
+
+.priority-media { 
+  background: linear-gradient(135deg, #FFFDE7, #FFF9C4); 
+  color: #F9A825; 
+}
+
+.priority-baja { 
+  background: linear-gradient(135deg, #E8F5E8, #C8E6C9); 
+  color: #2E7D32; 
+}
+
+/* ===== VISTA DE 3 DÍAS ===== */
+
+.day-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 246, 255, 0.9));
+  border: 2px solid var(--border-color);
+  backdrop-filter: blur(5px);
+}
+
+.day-card:hover {
+  border-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px var(--shadow-hover);
+}
+
+.day-header {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.day-task-item {
+  background: white;
+  border: 1px solid var(--border-color);
+}
+
+.day-task-item:hover {
+  background: var(--background-secondary);
+  border-color: var(--secondary-color);
+  transform: translateX(5px);
+}
+
+/* ===== CHECKLIST ITEMS ===== */
+
+.checklist-item {
+  background: white;
+  border: 1px solid var(--border-color);
+}
+
+.checklist-item:hover {
+  background: var(--background-secondary);
+  border-color: var(--primary-color);
+}
+
+.checklist-item.completed {
+  background: var(--success-color);
+  border-color: #4CAF50;
+}
+
+/* ===== INPUTS Y FORMS ===== */
+
+.app-input {
+  border: 2px solid var(--border-color);
+  background: white;
+}
+
+.app-input:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 0.2rem rgba(212, 169, 245, 0.25);
+}
+
+.form-check-input:checked {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+/* ===== BOTONES ===== */
+
+.btn-primary {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--background-secondary);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.btn-secondary:hover {
+  background: var(--border-hover);
+  color: var(--text-color);
+}
+
+.btn-outline-primary {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  background: #F3E8FF;
+}
+
+.btn-outline-primary:hover {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-outline-success {
+  color: #10B981;
+  border-color: #10B981;
+  background: var(--success-color);
+}
+
+.btn-outline-success:hover {
+  background: #10B981;
+  border-color: #10B981;
+  color: white;
+}
+
+.btn-outline-danger {
+  color: #EF4444;
+  border-color: #EF4444;
+  background: var(--danger-color);
+}
+
+.btn-outline-danger:hover {
+  background: #EF4444;
+  border-color: #EF4444;
+  color: white;
+}
+
+/* ===== PROGRESS BAR ===== */
+
+.progress-bar {
+  background: var(--gradient-primary) !important;
+}
+
+/* ===== SCROLLBARS ===== */
+
+.task-container::-webkit-scrollbar-thumb {
+  background: var(--gradient-primary);
+  border-radius: 10px;
+}
+
+.task-container::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+  border-radius: 10px;
+}
+
+/* ===== MODAL ===== */
+
+.app-modal {
+  border-radius: 20px;
+  box-shadow: 0 15px 50px rgba(212, 169, 245, 0.3);
+}
+
+.app-modal .modal-body {
+  background: linear-gradient(135deg, white, var(--background-secondary));
+}
+
+.app-modal .modal-footer {
+  background: var(--background-tertiary);
+  border-top: 1px solid var(--border-color);
+  border-radius: 0 0 20px 20px;
+}
+
+/* ===== ALERTS Y NOTIFICACIONES ===== */
+
+.app-alert {
+  background: linear-gradient(135deg, var(--background-secondary), var(--background-tertiary));
+  border: 1px solid var(--border-color);
+}
+
+.text-success {
+  color: #10B981 !important;
+}
+
+.text-warning {
+  color: #F59E0B !important;
+}
+
+.text-danger {
+  color: #EF4444 !important;
+}
+
+.text-primary {
+  color: var(--secondary-color) !important;
+}
+
+/* ===== TOASTS ===== */
+
+.toast {
+  border: none;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.toast.bg-success {
+  background: linear-gradient(135deg, var(--success-color), #C8E6C9) !important;
+  color: var(--text-color);
+}
+
+.toast.bg-danger {
+  background: linear-gradient(135deg, var(--danger-color), #FFCDD2) !important;
+  color: var(--text-color);
+}
+
+.toast.bg-warning {
+  background: linear-gradient(135deg, var(--warning-color), #FFE0B2) !important;
+  color: var(--text-color);
+}
+
+.toast.bg-info {
+  background: linear-gradient(135deg, var(--info-color), #E3F2FD) !important;
+  color: var(--text-color);
+}
+
+/* ===== LOADING SCREEN ===== */
+
+.loading-screen {
+  background: var(--gradient-primary);
+}
+
+/* ===== ESTADÍSTICAS ===== */
+
+.stat-number {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== DROPDOWN ===== */
+
+.dropdown-menu {
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 30px var(--shadow-color);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+}
+
+.dropdown-item:hover {
+  background: var(--background-secondary);
+  color: var(--text-color);
+}
+
+/* ===== ESTADOS HOVER MEJORADOS CON ANIMACIONES ===== */
+
+.app-card:hover {
+  transform: translateY(-5px);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.task-item:hover {
+  transform: translateY(-3px);
+}
+
+.day-task-item:hover {
+  transform: translateX(5px);
+}
+
+.sidebar .nav-link:hover:not(.disabled) {
+  transform: translateX(5px);
+}
+
+/* ===== ANIMACIONES ESPECIALES ===== */
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.3); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.3); }
+  70% { transform: scale(1); }
+}
+
+.overdue-indicator {
+  color: #FF6B9D;
+  font-weight: bold;
+  animation: heartbeat 2s infinite;
+}
+
+/* ===== EFECTOS ESPECIALES FEMENINOS ===== */
+
+.app-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  border-radius: 12px 12px 0 0;
+}
+
+.task-item::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  background: var(--gradient-primary);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+
+@media (max-width: 767.98px) {
+  /* Ajustes específicos para móvil en tema femenino */
+  .sidebar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+  }
+  
+  .task-item {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+  }
+  
+  .day-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+  }
+  
+  /* Reducir efectos en móvil para mejor rendimiento */
+  .app-card:hover,
+  .task-item:hover,
+  .btn:hover {
+    transform: none;
+  }
+}

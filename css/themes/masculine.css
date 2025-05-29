@@ -1,0 +1,507 @@
+/* ===== TEMA PROFESIONAL - MASCULINE ===== */
+
+/* Sobrescribir variables base con paleta azul-gris */
+:root {
+  /* Colores principales */
+  --primary-color: #334155;
+  --secondary-color: #64748b;
+  --tertiary-color: #1e293b;
+  --accent-color: #3b82f6;
+  
+  /* Backgrounds */
+  --background-color: #f8fafc;
+  --background-secondary: #f1f5f9;
+  --background-tertiary: #e2e8f0;
+  
+  /* Textos */
+  --text-color: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  
+  /* Bordes y sombras */
+  --border-color: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --shadow-color: rgba(30, 41, 59, 0.1);
+  --shadow-hover: rgba(30, 41, 59, 0.2);
+  
+  /* Estados */
+  --success-color: #0ea5e9;
+  --warning-color: #64748b;
+  --danger-color: #ef4444;
+  --info-color: #3b82f6;
+  
+  /* Gradientes */
+  --gradient-primary: linear-gradient(135deg, #334155, #1e293b);
+  --gradient-secondary: linear-gradient(135deg, #64748b, #334155);
+  --gradient-accent: linear-gradient(135deg, #3b82f6, #1e40af);
+  --gradient-background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+}
+
+/* ===== FONDOS Y LAYOUTS ===== */
+
+body {
+  background: var(--gradient-background);
+}
+
+.app-header {
+  background: var(--gradient-primary) !important;
+}
+
+.sidebar {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid var(--border-color);
+}
+
+/* ===== COMPONENTES PRINCIPALES ===== */
+
+.app-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+.app-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 30px var(--shadow-hover);
+}
+
+.btn-gradient {
+  background: var(--gradient-primary);
+  box-shadow: 0 4px 15px rgba(51, 65, 85, 0.3);
+}
+
+.btn-gradient:hover {
+  background: var(--gradient-secondary);
+  box-shadow: 0 6px 20px rgba(51, 65, 85, 0.4);
+}
+
+/* ===== NAVEGACIÓN ===== */
+
+.sidebar .nav-link.active {
+  background: var(--gradient-primary);
+  box-shadow: 0 4px 15px rgba(51, 65, 85, 0.2);
+}
+
+.sidebar .nav-link:hover:not(.active):not(.disabled) {
+  background: var(--background-color);
+  color: var(--primary-color);
+}
+
+/* ===== HEADERS DE CARDS ===== */
+
+.card-header-primary {
+  background: var(--gradient-primary);
+}
+
+.card-header-success {
+  background: var(--gradient-primary);
+}
+
+.card-header-info {
+  background: var(--gradient-secondary);
+}
+
+.card-header-warning {
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.98), rgba(241, 245, 249, 0.95));
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* ===== TABS ===== */
+
+.app-tab.active {
+  background: var(--gradient-primary);
+}
+
+.app-tab:hover:not(.active) {
+  background: var(--background-color);
+}
+
+/* ===== TASKS - PRIORIDADES ===== */
+
+.task-item {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+  border: 1px solid var(--border-color);
+}
+
+/* Prioridad Urgente - Rojo */
+.task-item.priority-urgente {
+  background: linear-gradient(135deg, #fef7f7, #fef2f2);
+  border-left: 4px solid var(--danger-color);
+}
+
+.task-item.priority-urgente:hover {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  box-shadow: 0 8px 30px rgba(239, 68, 68, 0.15);
+}
+
+/* Prioridad Alta - Azul Gris Oscuro */
+.task-item.priority-alta {
+  background: linear-gradient(135deg, rgba(241, 245, 249, 0.7), rgba(226, 232, 240, 0.5));
+  border-left: 4px solid var(--primary-color);
+}
+
+.task-item.priority-alta:hover {
+  background: linear-gradient(135deg, rgba(226, 232, 240, 0.9), rgba(203, 213, 225, 0.7));
+  box-shadow: 0 8px 30px rgba(51, 65, 85, 0.15);
+}
+
+/* Prioridad Media - Azul Gris */
+.task-item.priority-media {
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-left: 4px solid var(--secondary-color);
+}
+
+.task-item.priority-media:hover {
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  box-shadow: 0 8px 30px rgba(100, 116, 139, 0.15);
+}
+
+/* Prioridad Baja - Gris Claro */
+.task-item.priority-baja {
+  background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+  border-left: 4px solid var(--text-light);
+}
+
+.task-item.priority-baja:hover {
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+  box-shadow: 0 8px 30px rgba(148, 163, 184, 0.15);
+}
+
+/* Tarea Completada */
+.task-item.completed {
+  opacity: 0.6;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+  border-left: 4px solid var(--text-light) !important;
+}
+
+/* Tarea Vencida */
+.task-item.overdue {
+  background: linear-gradient(135deg, #fef7f7, #fef2f2) !important;
+  border-left: 4px solid var(--danger-color) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* ===== BADGES ===== */
+
+/* Badges de Categoría */
+.category-personal { 
+  background: linear-gradient(135deg, var(--accent-color), #1e40af); 
+  color: white; 
+}
+
+.category-trabajo { 
+  background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color)); 
+  color: white; 
+}
+
+.category-compras { 
+  background: linear-gradient(135deg, #06b6d4, var(--success-color)); 
+  color: white; 
+}
+
+.category-comida { 
+  background: linear-gradient(135deg, #06b6d4, var(--success-color)); 
+  color: white; 
+}
+
+.category-pagos { 
+  background: linear-gradient(135deg, var(--danger-color), #dc2626); 
+  color: white; 
+}
+
+.category-citas { 
+  background: linear-gradient(135deg, var(--success-color), #06b6d4); 
+  color: white; 
+}
+
+.category-otros { 
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)); 
+  color: white; 
+}
+
+/* Badges de Prioridad */
+.priority-urgente { 
+  background: linear-gradient(135deg, var(--danger-color), #dc2626); 
+  color: white; 
+}
+
+.priority-alta { 
+  background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color)); 
+  color: white; 
+}
+
+.priority-media { 
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)); 
+  color: white; 
+}
+
+.priority-baja { 
+  background: linear-gradient(135deg, var(--text-light), var(--secondary-color)); 
+  color: white; 
+}
+
+/* ===== VISTA DE 3 DÍAS ===== */
+
+.day-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(241, 245, 249, 0.95));
+  border: 1px solid var(--border-color);
+}
+
+.day-card:hover {
+  border-color: var(--secondary-color);
+}
+
+.day-header {
+  background: var(--gradient-primary);
+}
+
+.day-task-item {
+  background: white;
+  border: 1px solid var(--border-color);
+}
+
+.day-task-item:hover {
+  background: var(--background-color);
+  border-color: var(--secondary-color);
+}
+
+/* ===== CHECKLIST ITEMS ===== */
+
+.checklist-item {
+  background: white;
+  border: 1px solid var(--border-color);
+}
+
+.checklist-item:hover {
+  background: var(--background-color);
+  border-color: var(--primary-color);
+}
+
+.checklist-item.completed {
+  background: #f0f9ff;
+  border-color: var(--success-color);
+}
+
+/* ===== INPUTS Y FORMS ===== */
+
+.app-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(51, 65, 85, 0.15);
+}
+
+.form-check-input:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* ===== BOTONES ===== */
+
+.btn-primary {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background: var(--tertiary-color);
+  border-color: var(--tertiary-color);
+}
+
+.btn-secondary {
+  background: var(--background-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+  background: var(--border-hover);
+  color: var(--text-color);
+}
+
+.btn-outline-primary {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  background: #eff6ff;
+}
+
+.btn-outline-primary:hover {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+  color: white;
+}
+
+.btn-outline-success {
+  color: var(--success-color);
+  border-color: var(--success-color);
+  background: #f0f9ff;
+}
+
+.btn-outline-success:hover {
+  background: var(--success-color);
+  border-color: var(--success-color);
+  color: white;
+}
+
+.btn-outline-danger {
+  color: var(--danger-color);
+  border-color: var(--danger-color);
+  background: #fef2f2;
+}
+
+.btn-outline-danger:hover {
+  background: var(--danger-color);
+  border-color: var(--danger-color);
+  color: white;
+}
+
+/* ===== PROGRESS BAR ===== */
+
+.progress-bar {
+  background: var(--gradient-primary) !important;
+}
+
+/* ===== SCROLLBARS ===== */
+
+.task-container::-webkit-scrollbar-thumb {
+  background: var(--gradient-primary);
+}
+
+.task-container::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+/* ===== MODAL ===== */
+
+.app-modal .modal-body {
+  background: linear-gradient(135deg, white, var(--background-color));
+}
+
+.app-modal .modal-footer {
+  background: var(--background-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+/* ===== ALERTS Y NOTIFICACIONES ===== */
+
+.app-alert {
+  background: linear-gradient(135deg, var(--background-color), white);
+  border: 1px solid var(--border-color);
+}
+
+.text-success {
+  color: var(--success-color) !important;
+}
+
+.text-warning {
+  color: var(--warning-color) !important;
+}
+
+.text-danger {
+  color: var(--danger-color) !important;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+/* ===== TOASTS ===== */
+
+.toast {
+  border: none;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.toast.bg-success {
+  background: linear-gradient(135deg, var(--success-color), #0284c7) !important;
+}
+
+.toast.bg-danger {
+  background: linear-gradient(135deg, var(--danger-color), #dc2626) !important;
+}
+
+.toast.bg-warning {
+  background: linear-gradient(135deg, var(--warning-color), var(--primary-color)) !important;
+}
+
+.toast.bg-info {
+  background: linear-gradient(135deg, var(--info-color), #1d4ed8) !important;
+}
+
+/* ===== LOADING SCREEN ===== */
+
+.loading-screen {
+  background: var(--gradient-primary);
+}
+
+/* ===== ESTADÍSTICAS ===== */
+
+.stat-number {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== DROPDOWN ===== */
+
+.dropdown-menu {
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 30px var(--shadow-color);
+  backdrop-filter: blur(10px);
+}
+
+.dropdown-item:hover {
+  background: var(--background-color);
+  color: var(--primary-color);
+}
+
+/* ===== ESTADOS HOVER MEJORADOS ===== */
+
+.app-card:hover {
+  transform: translateY(-3px);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.task-item:hover {
+  transform: translateY(-2px);
+}
+
+.day-task-item:hover {
+  transform: translateX(5px);
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+
+@media (max-width: 767.98px) {
+  /* Ajustes específicos para móvil en tema masculino */
+  .sidebar {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(15px);
+  }
+  
+  .task-item {
+    background: white;
+    border: 1px solid var(--border-color);
+  }
+  
+  .day-card {
+    background: white;
+    border: 1px solid var(--border-color);
+  }
+}
+
+/* ===== DARK MODE SUPPORT (Futuro) ===== */
+
+@media (prefers-color-scheme: dark) {
+  /* Preparado para modo oscuro futuro */
+  :root {
+    --background-color: #0f172a;
+    --text-color: #f8fafc;
+    /* Más variables para modo oscuro */
+  }
+}

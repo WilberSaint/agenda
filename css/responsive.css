@@ -1,0 +1,852 @@
+/* ===== RESPONSIVE STYLES - Agenda Personal Pro ===== */
+
+/* ===== BREAKPOINTS DEFINIDOS ===== */
+/*
+  xs: 0px - 575.98px    (Extra small devices - phones)
+  sm: 576px - 767.98px  (Small devices - landscape phones)  
+  md: 768px - 991.98px  (Medium devices - tablets)
+  lg: 992px - 1199.98px (Large devices - laptops)
+  xl: 1200px+           (Extra large devices - desktops)
+*/
+
+/* ===== MOBILE FIRST - BASE STYLES ===== */
+
+/* Layout base para móvil */
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    z-index: 100;
+    padding: 0 15px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 60px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 60px);
+    z-index: 1000;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.main-content {
+    margin-top: 60px;
+    padding: 15px;
+    flex: 1;
+    transition: margin-left 0.3s ease;
+}
+
+/* ===== EXTRA SMALL DEVICES (0px - 575px) ===== */
+@media (max-width: 575.98px) {
+    
+    /* Header ajustado para móviles pequeños */
+    .app-header {
+        height: 56px;
+        padding: 0 10px;
+    }
+    
+    .app-header h1 {
+        font-size: 1.1rem;
+    }
+    
+    .sidebar {
+        top: 56px;
+        height: calc(100vh - 56px);
+    }
+    
+    .main-content {
+        margin-top: 56px;
+        padding: 10px;
+    }
+    
+    /* Sidebar en móviles pequeños */
+    .sidebar-content {
+        padding: 15px;
+    }
+    
+    .sidebar .nav-link {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .sidebar .nav-link i {
+        width: 20px;
+        font-size: 0.9rem;
+    }
+    
+    /* Cards más compactas */
+    .app-card {
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .app-card .card-body {
+        padding: 15px;
+    }
+    
+    .app-card .card-header {
+        padding: 12px 15px;
+    }
+    
+    /* Botones touch-friendly */
+    .btn {
+        min-height: 44px;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .btn-sm {
+        min-height: 38px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    /* Inputs más grandes para touch */
+    .app-input,
+    .form-control,
+    .form-select {
+        min-height: 44px;
+        padding: 12px;
+        font-size: 16px; /* Evita zoom en iOS */
+    }
+    
+    /* Tasks más compactas */
+    .task-item {
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+    }
+    
+    .task-title {
+        font-size: 1rem;
+    }
+    
+    .task-actions {
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+    }
+    
+    .task-actions .btn {
+        min-width: 40px;
+        padding: 8px;
+    }
+    
+    /* Vista de 3 días más compacta */
+    .day-card {
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+    
+    .day-header {
+        padding: 8px;
+        font-size: 0.95rem;
+        border-radius: 6px;
+    }
+    
+    .day-task-item {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+    
+    /* Estadísticas más pequeñas */
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.7rem;
+    }
+    
+    /* Tabs solo íconos */
+    .app-tab .d-inline.d-sm-none {
+        display: inline !important;
+    }
+    
+    .app-tab .d-none.d-sm-inline {
+        display: none !important;
+    }
+    
+    /* Modal full-screen en móviles pequeños */
+    .modal-dialog {
+        margin: 0;
+        max-width: 100%;
+        height: 100vh;
+    }
+    
+    .modal-content {
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    /* Dropdown menus más grandes */
+    .dropdown-menu {
+        min-width: 200px;
+    }
+    
+    .dropdown-item {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    /* Checklist items más espaciados */
+    .checklist-item {
+        padding: 12px;
+        margin-bottom: 8px;
+    }
+    
+    .checklist-text {
+        font-size: 0.9rem;
+    }
+    
+    /* Toast container ajustado */
+    .toast-container {
+        top: 70px !important;
+        right: 10px !important;
+        left: 10px !important;
+        width: auto !important;
+    }
+    
+    .toast {
+        width: 100%;
+    }
+}
+
+/* ===== SMALL DEVICES (576px - 767px) ===== */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    
+    .app-header {
+        height: 60px;
+        padding: 0 15px;
+    }
+    
+    .sidebar {
+        top: 60px;
+        height: calc(100vh - 60px);
+        width: 320px;
+        left: -320px;
+    }
+    
+    .sidebar.active {
+        left: 0;
+    }
+    
+    .main-content {
+        margin-top: 60px;
+        padding: 15px;
+    }
+    
+    /* Cards con más espacio */
+    .app-card .card-body {
+        padding: 20px;
+    }
+    
+    /* Botones con texto completo */
+    .btn {
+        padding: 10px 20px;
+    }
+    
+    /* Tasks con mejor espaciado */
+    .task-item {
+        padding: 20px;
+    }
+    
+    .task-actions {
+        gap: 8px;
+    }
+    
+    /* Vista de 3 días mejorada */
+    .day-card {
+        padding: 15px;
+    }
+    
+    /* Estadísticas con buen tamaño */
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    
+    /* Modal centrado */
+    .modal-dialog {
+        margin: 1.75rem auto;
+        max-width: 500px;
+    }
+    
+    .modal-content {
+        border-radius: 15px;
+    }
+    
+    /* Tabs con texto en landscape */
+    .app-tab .d-none.d-sm-inline {
+        display: inline !important;
+    }
+}
+
+/* ===== MEDIUM DEVICES - TABLETS (768px - 991px) ===== */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    
+    .app-header {
+        height: 70px;
+        padding: 0 20px;
+    }
+    
+    .app-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .sidebar {
+        top: 70px;
+        height: calc(100vh - 70px);
+        width: 280px;
+        left: -280px;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .sidebar.active {
+        left: 0;
+    }
+    
+    .main-content {
+        margin-top: 70px;
+        padding: 20px;
+    }
+    
+    /* Layout en dos columnas para tablets */
+    .row {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+    
+    .col-md-4,
+    .col-md-5,
+    .col-md-7,
+    .col-md-8 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    /* Cards con espaciado tablet */
+    .app-card {
+        margin-bottom: 20px;
+    }
+    
+    .app-card .card-body {
+        padding: 24px;
+    }
+    
+    /* Tasks con layout tablet */
+    .task-item {
+        padding: 24px;
+        margin-bottom: 15px;
+    }
+    
+    .task-actions {
+        flex-wrap: nowrap;
+        gap: 10px;
+    }
+    
+    /* Vista de 3 días optimizada para tablet */
+    .day-card {
+        height: 250px;
+    }
+    
+    .day-tasks {
+        max-height: 180px;
+    }
+    
+    /* Estadísticas tablet */
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.85rem;
+    }
+    
+    /* Modal tablet */
+    .modal-dialog {
+        max-width: 600px;
+    }
+    
+    /* Sidebar navigation mejorada */
+    .sidebar-content {
+        padding: 24px;
+    }
+    
+    .sidebar .nav-link {
+        padding: 14px 16px;
+        margin-bottom: 4px;
+        border-radius: 12px;
+    }
+    
+    /* Toast en tablet */
+    .toast-container {
+        top: 90px !important;
+        right: 20px !important;
+        left: auto !important;
+        width: 350px;
+    }
+    
+    /* Formularios más espaciosos */
+    .app-input {
+        padding: 12px 16px;
+    }
+    
+    /* Checklist mejorado */
+    .checklist-item {
+        padding: 16px;
+    }
+}
+
+/* ===== LARGE DEVICES - LAPTOPS (992px - 1199px) ===== */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    
+    /* Layout desktop con sidebar fijo */
+    .app-header {
+        height: 70px;
+        padding: 0 20px;
+        left: 280px; /* Espacio para sidebar */
+    }
+    
+    .sidebar {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 280px;
+        height: calc(100vh - 70px);
+        transform: translateX(0);
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .main-content {
+        margin-left: 280px;
+        margin-top: 70px;
+        padding: 24px;
+    }
+    
+    /* Overlay no necesario en desktop */
+    .sidebar-overlay {
+        display: none;
+    }
+    
+    /* Mobile menu toggle oculto */
+    #mobile-menu-toggle {
+        display: none;
+    }
+    
+    /* Cards desktop */
+    .app-card {
+        margin-bottom: 24px;
+    }
+    
+    .app-card .card-body {
+        padding: 28px;
+    }
+    
+    /* Task layout desktop */
+    .task-item {
+        padding: 28px;
+        margin-bottom: 16px;
+    }
+    
+    .task-actions {
+        gap: 12px;
+    }
+    
+    /* Vista de 3 días desktop */
+    .day-card {
+        height: 280px;
+    }
+    
+    .day-tasks {
+        max-height: 200px;
+    }
+    
+    /* Estadísticas desktop */
+    .stat-number {
+        font-size: 2.2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+    }
+    
+    /* Sidebar desktop mejorada */
+    .sidebar-content {
+        padding: 28px;
+    }
+    
+    .sidebar .nav-link {
+        padding: 16px 20px;
+        margin-bottom: 6px;
+        font-size: 0.95rem;
+    }
+    
+    .sidebar .nav-link i {
+        width: 20px;
+        margin-right: 12px;
+    }
+    
+    /* Modal desktop */
+    .modal-dialog {
+        max-width: 700px;
+    }
+    
+    /* Toast desktop */
+    .toast-container {
+        top: 90px !important;
+        right: 24px !important;
+        width: 400px;
+    }
+    
+    /* Hover effects solo en desktop */
+    .task-item:hover {
+        transform: translateY(-2px);
+    }
+    
+    .app-card:hover {
+        transform: translateY(-3px);
+    }
+    
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+    
+    .sidebar .nav-link:hover:not(.disabled) {
+        transform: translateX(4px);
+    }
+}
+
+/* ===== EXTRA LARGE DEVICES - DESKTOPS (1200px+) ===== */
+@media (min-width: 1200px) {
+    
+    /* Layout para pantallas grandes */
+    .app-header {
+        padding: 0 32px;
+    }
+    
+    .sidebar {
+        width: 300px;
+    }
+    
+    .app-header {
+        left: 300px;
+    }
+    
+    .main-content {
+        margin-left: 300px;
+        padding: 32px;
+        max-width: 1400px; /* Limitar ancho en pantallas muy grandes */
+    }
+    
+    /* Cards con más espacio */
+    .app-card .card-body {
+        padding: 32px;
+    }
+    
+    /* Tasks con layout amplio */
+    .task-item {
+        padding: 32px;
+        margin-bottom: 20px;
+    }
+    
+    /* Vista de 3 días amplia */
+    .day-card {
+        height: 320px;
+        padding: 20px;
+    }
+    
+    .day-tasks {
+        max-height: 240px;
+    }
+    
+    /* Estadísticas grandes */
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .stat-label {
+        font-size: 0.95rem;
+    }
+    
+    /* Sidebar amplia */
+    .sidebar-content {
+        padding: 32px;
+    }
+    
+    .sidebar .nav-link {
+        padding: 18px 24px;
+        font-size: 1rem;
+    }
+    
+    /* Modal grande */
+    .modal-dialog {
+        max-width: 800px;
+    }
+    
+    /* Toast grande */
+    .toast-container {
+        width: 450px;
+    }
+    
+    /* Container con max-width */
+    .container-fluid {
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+}
+
+/* ===== RESPONSIVE UTILITIES ===== */
+
+/* Utilities para mostrar/ocultar elementos */
+@media (max-width: 575.98px) {
+    .d-xs-none { display: none !important; }
+    .d-xs-block { display: block !important; }
+    .d-xs-inline { display: inline !important; }
+    .d-xs-inline-block { display: inline-block !important; }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .d-sm-none { display: none !important; }
+    .d-sm-block { display: block !important; }
+    .d-sm-inline { display: inline !important; }
+    .d-sm-inline-block { display: inline-block !important; }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .d-md-none { display: none !important; }
+    .d-md-block { display: block !important; }
+    .d-md-inline { display: inline !important; }
+    .d-md-inline-block { display: inline-block !important; }
+}
+
+@media (min-width: 992px) {
+    .d-lg-none { display: none !important; }
+    .d-lg-block { display: block !important; }
+    .d-lg-inline { display: inline !important; }
+    .d-lg-inline-block { display: inline-block !important; }
+}
+
+/* ===== RESPONSIVE SPACING ===== */
+
+/* Márgenes responsive */
+@media (max-width: 575.98px) {
+    .m-xs-0 { margin: 0 !important; }
+    .m-xs-1 { margin: 0.25rem !important; }
+    .m-xs-2 { margin: 0.5rem !important; }
+    .m-xs-3 { margin: 1rem !important; }
+    
+    .p-xs-0 { padding: 0 !important; }
+    .p-xs-1 { padding: 0.25rem !important; }
+    .p-xs-2 { padding: 0.5rem !important; }
+    .p-xs-3 { padding: 1rem !important; }
+}
+
+/* ===== RESPONSIVE TYPOGRAPHY ===== */
+
+/* Tamaños de texto responsive */
+@media (max-width: 575.98px) {
+    .h1, h1 { font-size: 1.5rem; }
+    .h2, h2 { font-size: 1.3rem; }
+    .h3, h3 { font-size: 1.15rem; }
+    .h4, h4 { font-size: 1rem; }
+    .h5, h5 { font-size: 0.9rem; }
+    .h6, h6 { font-size: 0.8rem; }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .h1, h1 { font-size: 1.75rem; }
+    .h2, h2 { font-size: 1.5rem; }
+    .h3, h3 { font-size: 1.25rem; }
+}
+
+@media (min-width: 768px) {
+    .h1, h1 { font-size: 2rem; }
+    .h2, h2 { font-size: 1.75rem; }
+    .h3, h3 { font-size: 1.5rem; }
+}
+
+/* ===== LANDSCAPE ORIENTATION ===== */
+
+/* Ajustes para orientación horizontal en móviles */
+@media (max-height: 500px) and (orientation: landscape) {
+    
+    .app-header {
+        height: 50px;
+    }
+    
+    .sidebar {
+        top: 50px;
+        height: calc(100vh - 50px);
+    }
+    
+    .main-content {
+        margin-top: 50px;
+        padding: 10px 15px;
+    }
+    
+    .app-header h1 {
+        font-size: 1rem;
+    }
+    
+    .day-card {
+        height: auto;
+        max-height: 200px;
+    }
+    
+    .day-tasks {
+        max-height: 120px;
+    }
+    
+    .modal-dialog {
+        margin: 0.5rem auto;
+    }
+    
+    .stat-number {
+        font-size: 1.2rem;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+
+@media print {
+    /* Ocultar elementos no necesarios para impresión */
+    .sidebar,
+    .app-header,
+    .btn,
+    .modal,
+    .toast-container,
+    .sidebar-overlay,
+    .task-actions {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .app-card {
+        box-shadow: none;
+        border: 1px solid #000;
+        page-break-inside: avoid;
+        margin-bottom: 1rem;
+    }
+    
+    .task-item {
+        border: 1px solid #ccc;
+        margin-bottom: 0.5rem;
+        page-break-inside: avoid;
+    }
+    
+    .task-title {
+        font-weight: bold;
+        color: #000;
+    }
+    
+    .task-description {
+        color: #333;
+    }
+    
+    /* Ajustar colores para impresión */
+    * {
+        color: #000 !important;
+        background: transparent !important;
+    }
+}
+
+/* ===== HIGH DPI DISPLAYS ===== */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Ajustes para pantallas de alta densidad */
+    .task-item {
+        border-width: 0.5px;
+    }
+    
+    .app-card {
+        border-width: 0.5px;
+    }
+    
+    /* Iconos más nítidos */
+    .fas,
+    .fab,
+    .far {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    /* Desactivar animaciones para usuarios que prefieren menos movimiento */
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .sidebar {
+        transition: none;
+    }
+    
+    .task-item:hover,
+    .app-card:hover,
+    .btn:hover {
+        transform: none;
+    }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+
+@media (prefers-color-scheme: dark) {
+    /* Preparado para modo oscuro futuro */
+    /* Los temas específicos manejarán esto */
+}
+
+/* ===== FOCUS STYLES FOR ACCESSIBILITY ===== */
+
+/* Mejorar visibilidad del foco para navegación por teclado */
+.btn:focus,
+.app-input:focus,
+.form-control:focus,
+.form-select:focus,
+.nav-link:focus {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+}
+
+@media (max-width: 767.98px) {
+    .btn:focus,
+    .app-input:focus {
+        outline-width: 3px; /* Foco más visible en mobile */
+    }
+}
+
+/* ===== CONTAINER QUERIES (Future) ===== */
+
+/* Preparado para Container Queries cuando tengan mejor soporte */
+/*
+@container (max-width: 400px) {
+    .task-item {
+        padding: 12px;
+    }
+}
+*/
