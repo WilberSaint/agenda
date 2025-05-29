@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Agenda Personal Pro</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#334155">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Agenda Pro">
+    
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/icon-152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-180.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+    
+    <!-- CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link id="theme-css" href="css/themes/masculine.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Cargando Agenda...</h3>
+            <p>Preparando tu espacio de productividad</p>
+        </div>
+    </div>
+
+    <div class="app-container" id="app-container" style="display: none;">
+        <!-- Header Principal -->
+        <header class="app-header gradient-header text-white py-3">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-auto d-lg-none">
+                        <button class="btn btn-link text-white p-0" id="mobile-menu-toggle">
+                            <i class="fas fa-bars fa-lg"></i>
+                        </button>
+                    </div>
+                    <div class="col text-center col-lg-auto text-lg-start">
+                        <h1 class="mb-0">
+                            <i class="fas fa-calendar-alt me-2"></i>
+                            <span class="d-none d-sm-inline">Agenda Personal Pro</span>
+                            <span class="d-inline d-sm-none">Agenda Pro</span>
+                        </h1>
+                    </div>
+                    <div class="col-auto">
+                        <!-- Theme Selector -->
+                        <div class="dropdown">
+                            <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="themeDropdown" data-bs-toggle="dropdown">
+                                <i class="fas fa-palette me-1"></i>
+                                <span class="d-none d-sm-inline">Tema</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="#" onclick="ThemeManager.switch('masculine')">
+                                        <i class="fas fa-briefcase me-2"></i>Profesional
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#" onclick="ThemeManager.switch('feminine')">
+                                        <i class="fas fa-heart me-2"></i>Elegante
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-module="agenda">
+                            <i class="fas fa-calendar-check me-2"></i>
+                            <span>Agenda</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" data-module="habits">
+                            <i class="fas fa-repeat me-2"></i>
+                            <span>Hábitos</span>
+                            <small class="badge bg-secondary ms-auto">Próximamente</small>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" data-module="goals">
+                            <i class="fas fa-bullseye me-2"></i>
+                            <span>Metas</span>
+                            <small class="badge bg-secondary ms-auto">Próximamente</small>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" data-module="gym">
+                            <i class="fas fa-dumbbell me-2"></i>
+                            <span>Gimnasio</span>
+                            <small class="badge bg-secondary ms-auto">Próximamente</small>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" data-module="dashboard">
+                            <i class="fas fa-chart-line me-2"></i>
+                            <span>Dashboard</span>
+                            <small class="badge bg-secondary ms-auto">Próximamente</small>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Sidebar Footer -->
+                <div class="sidebar-footer mt-auto pt-3">
+                    <div class="text-center">
+                        <button class="btn btn-outline-primary btn-sm w-100 mb-2" id="install-button" style="display: none;">
+                            <i class="fas fa-download me-1"></i>Instalar App
+                        </button>
+                        <small class="text-muted d-block">
+                            <i class="fas fa-shield-alt me-1"></i>
+                            Datos seguros en tu dispositivo
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Module: Agenda -->
+            <div id="module-agenda" class="module-content active">
+                <!-- Vista de calendario de 3 días -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card app-card shadow-sm">
+                            <div class="card-header card-header-primary">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-calendar-week me-2"></i>
+                                    Próximos 3 Días
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row" id="threeDayView">
+                                    <!-- Los próximos 3 días se generarán aquí -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Sidebar para agregar tareas -->
+                    <div class="col-lg-4 col-md-5">
+                        <div class="card app-card shadow-sm">
+                            <div class="card-header card-header-success">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-plus me-2"></i>
+                                    Agregar Nueva Tarea
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="taskForm">
+                                    <div class="mb-3">
+                                        <label for="taskTitle" class="form-label">Título de la tarea</label>
+                                        <input type="text" class="form-control app-input" id="taskTitle" required>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="taskDescription" class="form-label">Descripción</label>
+                                        <textarea class="form-control app-input" id="taskDescription" rows="3"></textarea>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="taskType" class="form-label">Tipo</label>
+                                        <select class="form-select app-input" id="taskType">
+                                            <option value="pendiente">Pendiente (1 mes)</option>
+                                            <option value="recordatorio">Recordatorio</option>
+                                            <option value="checklist">Lista de tareas</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="taskCategory" class="form-label">Categoría</label>
+                                        <select class="form-select app-input" id="taskCategory">
+                                            <option value="personal">Personal</option>
+                                            <option value="trabajo">Trabajo</option>
+                                            <option value="compras">Compras</option>
+                                            <option value="comida">Comida/Mercado</option>
+                                            <option value="pagos">Pagos</option>
+                                            <option value="citas">Citas/Recordatorios</option>
+                                            <option value="otros">Otros</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="taskPriority" class="form-label">Prioridad</label>
+                                        <select class="form-select app-input" id="taskPriority">
+                                            <option value="baja">Baja</option>
+                                            <option value="media" selected>Media</option>
+                                            <option value="alta">Alta</option>
+                                            <option value="urgente">Urgente</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="taskDate" class="form-label">Fecha</label>
+                                        <input type="date" class="form-control app-input" id="taskDate">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="taskTime" class="form-label">Hora (opcional)</label>
+                                        <input type="time" class="form-control app-input" id="taskTime">
+                                    </div>
+
+                                    <!-- Sección para Checklist Items -->
+                                    <div id="checklistSection" style="display: none;">
+                                        <div class="mb-3">
+                                            <label class="form-label">Items de la lista</label>
+                                            <div id="checklistItems">
+                                                <div class="input-group mb-2">
+                                                    <input type="text" class="form-control app-input" placeholder="Agregar item...">
+                                                    <button type="button" class="btn btn-primary" onclick="agenda.addChecklistItem(this)">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-gradient w-100">
+                                        <i class="fas fa-save me-2"></i>
+                                        Guardar Tarea
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Filtros -->
+                        <div class="card app-card shadow-sm mt-3">
+                            <div class="card-header card-header-info">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-filter me-2"></i>
+                                    Filtros
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-2">
+                                    <select class="form-select form-select-sm app-input" id="filterType">
+                                        <option value="">Todos los tipos</option>
+                                        <option value="pendiente">Pendientes</option>
+                                        <option value="recordatorio">Recordatorios</option>
+                                        <option value="checklist">Listas</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <select class="form-select form-select-sm app-input" id="filterCategory">
+                                        <option value="">Todas las categorías</option>
+                                        <option value="personal">Personal</option>
+                                        <option value="trabajo">Trabajo</option>
+                                        <option value="compras">Compras</option>
+                                        <option value="comida">Comida/Mercado</option>
+                                        <option value="pagos">Pagos</option>
+                                        <option value="citas">Citas/Recordatorios</option>
+                                        <option value="otros">Otros</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <select class="form-select form-select-sm app-input" id="filterPriority">
+                                        <option value="">Todas las prioridades</option>
+                                        <option value="urgente">Urgente</option>
+                                        <option value="alta">Alta</option>
+                                        <option value="media">Media</option>
+                                        <option value="baja">Baja</option>
+                                    </select>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="filterCompleted">
+                                    <label class="form-check-label" for="filterCompleted">
+                                        Mostrar completadas
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de tareas con pestañas -->
+                    <div class="col-lg-8 col-md-7">
+                        <div class="card app-card shadow-sm">
+                            <div class="card-header card-header-warning">
+                                <ul class="nav nav-tabs card-header-tabs" id="taskTabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active app-tab" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-tasks" type="button" role="tab">
+                                            <i class="fas fa-list me-1"></i>
+                                            <span class="d-none d-sm-inline">Todas</span>
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link app-tab" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending-tasks" type="button" role="tab">
+                                            <i class="fas fa-clock me-1"></i>
+                                            <span class="d-none d-sm-inline">Pendientes</span>
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link app-tab" id="checklist-tab" data-bs-toggle="tab" data-bs-target="#checklist-tasks" type="button" role="tab">
+                                            <i class="fas fa-check-square me-1"></i>
+                                            <span class="d-none d-sm-inline">Listas</span>
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link app-tab" id="reminders-tab" data-bs-toggle="tab" data-bs-target="#reminder-tasks" type="button" role="tab">
+                                            <i class="fas fa-bell me-1"></i>
+                                            <span class="d-none d-sm-inline">Recordatorios</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                                <div class="mt-2 d-flex justify-content-end flex-wrap gap-2">
+                                    <button class="btn btn-sm btn-secondary" id="exportToGoogle">
+                                        <i class="fab fa-google me-1"></i>
+                                        <span class="d-none d-sm-inline">Exportar a Google</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" id="clearCompleted">
+                                        <i class="fas fa-trash me-1"></i>
+                                        <span class="d-none d-sm-inline">Limpiar completadas</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body">
+                                <div id="taskStats" class="alert app-alert border mb-3">
+                                    <div class="row text-center">
+                                        <div class="col-3">
+                                            <div class="stat-number" id="totalTasks">0</div>
+                                            <div class="stat-label">Total</div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="stat-number text-success" id="completedTasks">0</div>
+                                            <div class="stat-label">Completadas</div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="stat-number text-warning" id="pendingTasks">0</div>
+                                            <div class="stat-label">Pendientes</div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="stat-number text-danger" id="urgentTasks">0</div>
+                                            <div class="stat-label">Urgentes</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tab-content" id="taskTabContent">
+                                    <div class="tab-pane fade show active" id="all-tasks" role="tabpanel">
+                                        <div id="taskList" class="task-container">
+                                            <!-- Todas las tareas se mostrarán aquí -->
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pending-tasks" role="tabpanel">
+                                        <div id="pendingList" class="task-container">
+                                            <!-- Pendientes se mostrarán aquí -->
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="checklist-tasks" role="tabpanel">
+                                        <div id="checklistList" class="task-container">
+                                            <!-- Listas se mostrarán aquí -->
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="reminder-tasks" role="tabpanel">
+                                        <div id="reminderList" class="task-container">
+                                            <!-- Recordatorios se mostrarán aquí -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="emptyState" class="text-center py-5 text-muted" style="display: none;">
+                                    <i class="fas fa-tasks fa-3x mb-3 text-primary"></i>
+                                    <h5>No hay tareas aún</h5>
+                                    <p>Agrega tu primera tarea para comenzar</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placeholder para futuros módulos -->
+            <div id="module-habits" class="module-content">
+                <div class="text-center py-5">
+                    <i class="fas fa-repeat fa-4x text-muted mb-3"></i>
+                    <h3>Módulo de Hábitos</h3>
+                    <p class="text-muted">Próximamente disponible</p>
+                </div>
+            </div>
+
+            <div id="module-goals" class="module-content">
+                <div class="text-center py-5">
+                    <i class="fas fa-bullseye fa-4x text-muted mb-3"></i>
+                    <h3>Módulo de Metas</h3>
+                    <p class="text-muted">Próximamente disponible</p>
+                </div>
+            </div>
+
+            <div id="module-gym" class="module-content">
+                <div class="text-center py-5">
+                    <i class="fas fa-dumbbell fa-4x text-muted mb-3"></i>
+                    <h3>Módulo de Gimnasio</h3>
+                    <p class="text-muted">Próximamente disponible</p>
+                </div>
+            </div>
+
+            <div id="module-dashboard" class="module-content">
+                <div class="text-center py-5">
+                    <i class="fas fa-chart-line fa-4x text-muted mb-3"></i>
+                    <h3>Dashboard</h3>
+                    <p class="text-muted">Próximamente disponible</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Sidebar Overlay para móvil -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Modal para editar tarea -->
+    <div class="modal fade" id="editTaskModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content app-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-edit me-2"></i>
+                        Editar Tarea
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTaskForm">
+                        <input type="hidden" id="editTaskId">
+                        <div class="mb-3">
+                            <label for="editTaskTitle" class="form-label">Título</label>
+                            <input type="text" class="form-control app-input" id="editTaskTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control app-input" id="editTaskDescription" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskType" class="form-label">Tipo</label>
+                            <select class="form-select app-input" id="editTaskType">
+                                <option value="pendiente">Pendiente (1 mes)</option>
+                                <option value="recordatorio">Recordatorio</option>
+                                <option value="checklist">Lista de tareas</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskCategory" class="form-label">Categoría</label>
+                            <select class="form-select app-input" id="editTaskCategory">
+                                <option value="personal">Personal</option>
+                                <option value="trabajo">Trabajo</option>
+                                <option value="compras">Compras</option>
+                                <option value="comida">Comida/Mercado</option>
+                                <option value="pagos">Pagos</option>
+                                <option value="citas">Citas/Recordatorios</option>
+                                <option value="otros">Otros</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskPriority" class="form-label">Prioridad</label>
+                            <select class="form-select app-input" id="editTaskPriority">
+                                <option value="baja">Baja</option>
+                                <option value="media">Media</option>
+                                <option value="alta">Alta</option>
+                                <option value="urgente">Urgente</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskDate" class="form-label">Fecha</label>
+                            <input type="date" class="form-control app-input" id="editTaskDate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editTaskTime" class="form-label">Hora</label>
+                            <input type="time" class="form-control app-input" id="editTaskTime">
+                        </div>
+                        <div id="editChecklistSection" style="display: none;">
+                            <div class="mb-3">
+                                <label class="form-label">Items de la lista</label>
+                                <div id="editChecklistItems">
+                                    <!-- Los items se cargarán aqui -->
+                                </div>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="agenda.addEditChecklistItem()">
+                                    <i class="fas fa-plus me-1"></i>
+                                    Agregar Item
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-gradient" id="saveEditTask">
+                        <i class="fas fa-save me-1"></i>
+                        Guardar Cambios
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" id="toast-container">
+        <!-- Toasts se generarán aquí -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/modules/agenda.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- PWA Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('SW registrado con éxito: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW falló al registrarse: ', registrationError);
+                    });
+            });
+        }
+
+        // PWA Install Button
+        let deferredPrompt;
+        const installButton = document.getElementById('install-button');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.style.display = 'block';
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+                installButton.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

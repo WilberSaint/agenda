@@ -1,0 +1,216 @@
+{
+  "name": "Agenda Personal Pro",
+  "short_name": "Agenda Pro",
+  "description": "Organiza tu vida de manera eficiente con una agenda completa, hábitos, metas y seguimiento de gimnasio",
+  "version": "1.0.0",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#334155",
+  "background_color": "#1e293b",
+  "lang": "es",
+  "dir": "ltr",
+  
+  "categories": [
+    "productivity",
+    "lifestyle",
+    "utilities"
+  ],
+  
+  "screenshots": [
+    {
+      "src": "assets/screenshots/desktop-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Vista de escritorio de Agenda Personal Pro"
+    },
+    {
+      "src": "assets/screenshots/mobile-narrow.png", 
+      "sizes": "375x812",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Vista móvil de Agenda Personal Pro"
+    }
+  ],
+  
+  "icons": [
+    {
+      "src": "assets/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/icon-96x96.png",
+      "sizes": "96x96", 
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/icon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "assets/icons/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png", 
+      "purpose": "any"
+    }
+  ],
+  
+  "shortcuts": [
+    {
+      "name": "Agregar Tarea",
+      "short_name": "Nueva Tarea",
+      "description": "Agregar una nueva tarea rápidamente",
+      "url": "/?action=new-task",
+      "icons": [
+        {
+          "src": "assets/icons/shortcut-add-task.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Ver Hábitos",
+      "short_name": "Hábitos",
+      "description": "Revisar y marcar hábitos diarios",
+      "url": "/?module=habits",
+      "icons": [
+        {
+          "src": "assets/icons/shortcut-habits.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Resumen",
+      "description": "Ver resumen de progreso general",
+      "url": "/?module=dashboard",
+      "icons": [
+        {
+          "src": "assets/icons/shortcut-dashboard.png",
+          "sizes": "96x96", 
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Gimnasio",
+      "short_name": "Entreno",
+      "description": "Registrar sesión de entrenamiento",
+      "url": "/?module=gym",
+      "icons": [
+        {
+          "src": "assets/icons/shortcut-gym.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  
+  "protocol_handlers": [
+    {
+      "protocol": "web+agenda",
+      "url": "/?task=%s"
+    }
+  ],
+  
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+  
+  "handle_links": "preferred",
+  
+  "share_target": {
+    "action": "/?share-target",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  
+  "file_handlers": [
+    {
+      "action": "/?file-handler",
+      "accept": {
+        "text/calendar": [".ics"],
+        "application/json": [".json"],
+        "text/csv": [".csv"]
+      }
+    }
+  ],
+  
+  "related_applications": [],
+  "prefer_related_applications": false,
+  
+  "iarc_rating_id": "",
+  
+  "permissions": [
+    "notifications",
+    "persistent-storage"
+  ],
+  
+  "features": [
+    "Cross Platform",
+    "fast",
+    "simple"
+  ]
+}
