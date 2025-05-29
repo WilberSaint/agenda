@@ -17,7 +17,8 @@ class AppController {
                 name: 'Hábitos',
                 icon: 'fas fa-repeat',
                 active: false,
-                comingSoon: true
+                comingSoon: false,
+                initialized: false
             },
             goals: {
                 name: 'Metas',
@@ -128,6 +129,34 @@ class AppController {
         
         // PWA events
         this.bindPWAEvents();
+
+        // Event listeners para integración con hábitos (agregar en bindEvents())
+document.addEventListener('habitsHabitCompleted', (e) => {
+    console.log('🎉 Hábito completado:', e.detail.habit.name);
+    
+    // Opcional: Crear una tarea de celebración en la agenda
+    if (window.agenda && e.detail.habit) {
+        const celebrationTask = {
+            id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+            title: `🎉 Completé: ${e.detail.habit.name}`,
+            description: `¡Felicidades! Completaste tu hábito de ${e.detail.habit.name}`,
+            type: 'recordatorio',
+            category: 'personal',
+            priority: 'baja',
+            date: new Date().toISOString().split('T')[0],
+            completed: true,
+            createdAt: new Date().toISOString()
+        };
+        
+        // Opcional: Auto-agregar a agenda (comentar si no se desea)
+        // window.agenda.tasks.unshift(celebrationTask);
+        // window.agenda.saveTasks();
+    }
+});
+
+document.addEventListener('habitsModuleInitialized', () => {
+    console.log('✅ Módulo de Hábitos completamente inicializado');
+});
     }
 
     /**
@@ -406,7 +435,16 @@ class AppController {
      */
     initializeHabitsModule() {
         console.log('🔄 Inicializando módulo de Hábitos...');
-        // TODO: Implementar cuando creemos el módulo
+    
+    // Verificar si el módulo de hábitos está disponible
+    if (window.habits && typeof window.habits.init === 'function') {
+        if (!window.habits.isInitialized) {
+            window.habits.init();
+        }
+        console.log('✅ Módulo de Hábitos inicializado correctamente');
+    } else {
+        console.warn('⚠️ Módulo de Hábitos no encontrado');
+    }
     }
 
     initializeGoalsModule() {
@@ -436,6 +474,11 @@ class AppController {
             this.sidebarOpen = false;
         }
     }
+
+    /**
+     *  Listener de eventos
+     */
+
 
     /**
      * Manejar cambios de tamaño de ventana

@@ -25,6 +25,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="css/base.css" rel="stylesheet">
+    <link href="css/habits.css" rel="stylesheet">
     <link id="theme-css" href="css/themes/masculine.css" rel="stylesheet">
     <link href="css/responsive.css" rel="stylesheet">
 </head>
@@ -94,7 +95,6 @@
                         <a class="nav-link disabled" href="#" data-module="habits">
                             <i class="fas fa-repeat me-2"></i>
                             <span>Hábitos</span>
-                            <small class="badge bg-secondary ms-auto">Próximamente</small>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -391,15 +391,323 @@
                 </div>
             </div>
 
-            <!-- Placeholder para futuros módulos -->
-            <div id="module-habits" class="module-content">
-                <div class="text-center py-5">
-                    <i class="fas fa-repeat fa-4x text-muted mb-3"></i>
-                    <h3>Módulo de Hábitos</h3>
-                    <p class="text-muted">Próximamente disponible</p>
+<!-- Module: Hábitos -->
+<div id="module-habits" class="module-content">
+    <!-- Vista de progreso de hoy -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-primary">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-day me-2"></i>
+                        Progreso de Hoy
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="todayHabitsProgress">
+                        <!-- El progreso de hoy se generará aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Sidebar para agregar hábitos -->
+        <div class="col-lg-4 col-md-5">
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-success">
+                    <h5 class="mb-0">
+                        <i class="fas fa-plus me-2"></i>
+                        Crear Nuevo Hábito
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="habitForm">
+                        <div class="mb-3">
+                            <label for="habitName" class="form-label">Nombre del hábito</label>
+                            <input type="text" class="form-control app-input" id="habitName" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="habitDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control app-input" id="habitDescription" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="habitCategory" class="form-label">Categoría</label>
+                            <select class="form-select app-input" id="habitCategory">
+                                <option value="health">Salud</option>
+                                <option value="fitness">Fitness</option>
+                                <option value="productivity">Productividad</option>
+                                <option value="learning">Aprendizaje</option>
+                                <option value="social">Social</option>
+                                <option value="spiritual">Espiritual</option>
+                                <option value="creative">Creativo</option>
+                                <option value="financial">Financiero</option>
+                                <option value="other">Otro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="habitDifficulty" class="form-label">Dificultad</label>
+                            <select class="form-select app-input" id="habitDifficulty">
+                                <option value="easy">Fácil</option>
+                                <option value="medium" selected>Medio</option>
+                                <option value="hard">Difícil</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="habitFrequency" class="form-label">Frecuencia</label>
+                            <select class="form-select app-input" id="habitFrequency">
+                                <option value="daily" selected>Diario</option>
+                                <option value="weekly">Semanal</option>
+                                <option value="workdays">Días laborales</option>
+                                <option value="weekends">Fines de semana</option>
+                            </select>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-8">
+                                <label for="habitTargetValue" class="form-label">Meta diaria</label>
+                                <input type="number" class="form-control app-input" id="habitTargetValue" min="1" value="1">
+                            </div>
+                            <div class="col-4">
+                                <label for="habitUnit" class="form-label">Unidad</label>
+                                <input type="text" class="form-control app-input" id="habitUnit" value="veces">
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <label for="habitIcon" class="form-label">Ícono</label>
+                                <select class="form-select app-input" id="habitIcon">
+                                    <option value="fas fa-star">⭐ Estrella</option>
+                                    <option value="fas fa-heart">❤️ Corazón</option>
+                                    <option value="fas fa-fire">🔥 Fuego</option>
+                                    <option value="fas fa-dumbbell">🏋️ Ejercicio</option>
+                                    <option value="fas fa-book">📚 Lectura</option>
+                                    <option value="fas fa-glass-water">💧 Agua</option>
+                                    <option value="fas fa-bed">🛏️ Dormir</option>
+                                    <option value="fas fa-utensils">🍽️ Comida</option>
+                                    <option value="fas fa-brain">🧠 Mental</option>
+                                    <option value="fas fa-leaf">🌱 Naturaleza</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label for="habitColor" class="form-label">Color</label>
+                                <input type="color" class="form-control app-input" id="habitColor" value="#60a5fa">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-gradient w-100 mt-3">
+                            <i class="fas fa-save me-2"></i>
+                            Crear Hábito
+                        </button>
+                    </form>
                 </div>
             </div>
 
+            <!-- Filtros -->
+            <div class="card app-card shadow-sm mt-3">
+                <div class="card-header card-header-info">
+                    <h6 class="mb-0">
+                        <i class="fas fa-filter me-2"></i>
+                        Filtros
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterHabitCategory">
+                            <option value="">Todas las categorías</option>
+                            <option value="health">Salud</option>
+                            <option value="fitness">Fitness</option>
+                            <option value="productivity">Productividad</option>
+                            <option value="learning">Aprendizaje</option>
+                            <option value="social">Social</option>
+                            <option value="spiritual">Espiritual</option>
+                            <option value="creative">Creativo</option>
+                            <option value="financial">Financiero</option>
+                            <option value="other">Otro</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterHabitDifficulty">
+                            <option value="">Todas las dificultades</option>
+                            <option value="easy">Fácil</option>
+                            <option value="medium">Medio</option>
+                            <option value="hard">Difícil</option>
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="filterArchivedHabits">
+                        <label class="form-check-label" for="filterArchivedHabits">
+                            Mostrar archivados
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de hábitos -->
+        <div class="col-lg-8 col-md-7">
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-warning">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-list me-2"></i>
+                            Mis Hábitos
+                        </h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-secondary" id="archiveCompletedHabits">
+                                <i class="fas fa-archive me-1"></i>
+                                <span class="d-none d-sm-inline">Archivar completados</span>
+                            </button>
+                            <button class="btn btn-sm btn-info" id="exportHabits">
+                                <i class="fas fa-download me-1"></i>
+                                <span class="d-none d-sm-inline">Exportar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <div id="habitStats" class="alert app-alert border mb-3">
+                        <div class="row text-center">
+                            <div class="col-3">
+                                <div class="stat-number" id="totalHabits">0</div>
+                                <div class="stat-label">Total</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="stat-number text-success" id="todayCompletedHabits">0</div>
+                                <div class="stat-label">Hoy Completados</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="stat-number text-warning" id="todayPendingHabits">0</div>
+                                <div class="stat-label">Pendientes</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="stat-number text-info" id="averageStreak">0</div>
+                                <div class="stat-label">Racha Promedio</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="habitsList" class="habits-container">
+                        <!-- Los hábitos se mostrarán aquí -->
+                    </div>
+                    
+                    <div id="emptyHabitsState" class="text-center py-5 text-muted" style="display: none;">
+                        <i class="fas fa-repeat fa-3x mb-3 text-primary"></i>
+                        <h5>No hay hábitos aún</h5>
+                        <p>Crea tu primer hábito para comenzar a construir una rutina positiva</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar hábito -->
+<div class="modal fade" id="editHabitModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content app-modal">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit me-2"></i>
+                    Editar Hábito
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editHabitForm">
+                    <input type="hidden" id="editHabitId">
+                    <div class="mb-3">
+                        <label for="editHabitName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control app-input" id="editHabitName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editHabitDescription" class="form-label">Descripción</label>
+                        <textarea class="form-control app-input" id="editHabitDescription" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editHabitCategory" class="form-label">Categoría</label>
+                        <select class="form-select app-input" id="editHabitCategory">
+                            <option value="health">Salud</option>
+                            <option value="fitness">Fitness</option>
+                            <option value="productivity">Productividad</option>
+                            <option value="learning">Aprendizaje</option>
+                            <option value="social">Social</option>
+                            <option value="spiritual">Espiritual</option>
+                            <option value="creative">Creativo</option>
+                            <option value="financial">Financiero</option>
+                            <option value="other">Otro</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editHabitDifficulty" class="form-label">Dificultad</label>
+                        <select class="form-select app-input" id="editHabitDifficulty">
+                            <option value="easy">Fácil</option>
+                            <option value="medium">Medio</option>
+                            <option value="hard">Difícil</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editHabitFrequency" class="form-label">Frecuencia</label>
+                        <select class="form-select app-input" id="editHabitFrequency">
+                            <option value="daily">Diario</option>
+                            <option value="weekly">Semanal</option>
+                            <option value="workdays">Días laborales</option>
+                            <option value="weekends">Fines de semana</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <label for="editHabitTargetValue" class="form-label">Meta diaria</label>
+                            <input type="number" class="form-control app-input" id="editHabitTargetValue" min="1">
+                        </div>
+                        <div class="col-4">
+                            <label for="editHabitUnit" class="form-label">Unidad</label>
+                            <input type="text" class="form-control app-input" id="editHabitUnit">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <label for="editHabitIcon" class="form-label">Ícono</label>
+                            <select class="form-select app-input" id="editHabitIcon">
+                                <option value="fas fa-star">⭐ Estrella</option>
+                                <option value="fas fa-heart">❤️ Corazón</option>
+                                <option value="fas fa-fire">🔥 Fuego</option>
+                                <option value="fas fa-dumbbell">🏋️ Ejercicio</option>
+                                <option value="fas fa-book">📚 Lectura</option>
+                                <option value="fas fa-glass-water">💧 Agua</option>
+                                <option value="fas fa-bed">🛏️ Dormir</option>
+                                <option value="fas fa-utensils">🍽️ Comida</option>
+                                <option value="fas fa-brain">🧠 Mental</option>
+                                <option value="fas fa-leaf">🌱 Naturaleza</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="editHabitColor" class="form-label">Color</label>
+                            <input type="color" class="form-control app-input" id="editHabitColor">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-gradient" id="saveEditHabit">
+                    <i class="fas fa-save me-1"></i>
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+             <!-- Modulo de Metas -->
             <div id="module-goals" class="module-content">
                 <div class="text-center py-5">
                     <i class="fas fa-bullseye fa-4x text-muted mb-3"></i>
@@ -407,7 +715,7 @@
                     <p class="text-muted">Próximamente disponible</p>
                 </div>
             </div>
-
+            <!-- Modulo de Gimnasio -->
             <div id="module-gym" class="module-content">
                 <div class="text-center py-5">
                     <i class="fas fa-dumbbell fa-4x text-muted mb-3"></i>
@@ -523,6 +831,7 @@
     <script src="js/themes.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/modules/agenda.js"></script>
+    <script src="js/modules/habits.js"></script>
     <script src="js/app.js"></script>
     
     <!-- PWA Service Worker -->
