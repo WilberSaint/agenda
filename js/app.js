@@ -65,6 +65,13 @@ class AppController {
         setTimeout(() => {
             this.hideLoadingScreen();
         }, 1000);
+
+        //mostrar navbar en desktop
+        // Si no es móvil, asegurar que el sidebar esté visible
+        if (!this.isMobile) {
+             this.openSidebar();
+        }
+
         
         console.log('✅ Agenda Personal Pro inicializada correctamente');
     }
