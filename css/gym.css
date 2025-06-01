@@ -1,0 +1,485 @@
+/**
+ * Gym Module Styles - Agenda Personal Pro
+ * Estilos específicos para el módulo de gimnasio
+ */
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+#module-gym {
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+/* ===== ENTRENAMIENTOS ===== */
+.workouts-container {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.workout-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.workout-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+.workout-item.archived {
+    opacity: 0.7;
+    background: var(--bg-light);
+    border-style: dashed;
+}
+
+.workout-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.25rem;
+}
+
+.workout-name {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.workout-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+}
+
+.workout-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.workout-notes {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.workout-exercises {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.exercise-summary {
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    min-width: 120px;
+}
+
+.exercise-name {
+    font-weight: 600;
+    color: var(--text-color);
+    display: block;
+}
+
+.exercise-best {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+}
+
+.workout-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.workout-actions .btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== FORMULARIOS DE EJERCICIOS ===== */
+.exercise-form-item {
+    background: var(--bg-light);
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+}
+
+.exercise-form-item:hover {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-sets .row {
+    margin: 0;
+}
+
+.exercise-sets .col-3 {
+    padding: 0 0.25rem;
+}
+
+.exercise-sets input {
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.set-form-row {
+    background: var(--white);
+    border-radius: 0.375rem;
+    padding: 0.25rem;
+    margin-bottom: 0.5rem !important;
+}
+
+/* ===== PESO CORPORAL ===== */
+.weight-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.weight-record {
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.weight-record:hover {
+    border-color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+.weight-record.latest {
+    background: linear-gradient(135deg, var(--primary-color)20, var(--secondary-color)20);
+    border-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.weight-date {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.weight-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.weight-change {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+}
+
+.weight-change.positive {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+.weight-change.negative {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #059669;
+}
+
+.weight-notes {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.25rem;
+}
+
+/* ===== ESTADÍSTICAS ===== */
+#quickGymStats {
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary-color)10, var(--secondary-color)10);
+    border-radius: 0.75rem;
+}
+
+.stat-item {
+    padding: 0.5rem;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.personal-records {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.pr-item {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.pr-exercise {
+    font-weight: 600;
+    color: var(--text-color);
+    flex-grow: 1;
+}
+
+.pr-weight {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 0.875rem;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 991.98px) {
+    #module-gym {
+        padding: 0.5rem;
+    }
+    
+    .workout-item {
+        padding: 0.75rem;
+    }
+    
+    .workout-meta {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .workout-actions {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .exercise-summary {
+        min-width: 100px;
+        flex: 1;
+    }
+    
+    .stat-number {
+        font-size: 1.25rem;
+    }
+    
+    .stat-label {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .workout-item .d-flex {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .workout-icon {
+        align-self: flex-start;
+    }
+    
+    .workout-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .exercise-sets .col-3 {
+        padding: 0 0.125rem;
+    }
+    
+    .exercise-sets input {
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
+    
+    .weight-chart {
+        max-height: 200px;
+    }
+    
+    .pr-item {
+        padding: 0.375rem 0.5rem;
+    }
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.workout-item,
+.weight-record,
+.exercise-form-item {
+    animation: slideInUp 0.3s ease-out;
+}
+
+/* ===== SCROLLBAR PERSONALIZADO ===== */
+.workouts-container::-webkit-scrollbar,
+.weight-chart::-webkit-scrollbar {
+    width: 6px;
+}
+
+.workouts-container::-webkit-scrollbar-track,
+.weight-chart::-webkit-scrollbar-track {
+    background: var(--bg-light);
+    border-radius: 3px;
+}
+
+.workouts-container::-webkit-scrollbar-thumb,
+.weight-chart::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.workouts-container::-webkit-scrollbar-thumb:hover,
+.weight-chart::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* ===== ESTADOS ESPECÍFICOS ===== */
+.workout-item.recent {
+    border-left: 4px solid var(--success-color);
+}
+
+.workout-item.personal-record {
+    border-left: 4px solid var(--warning-color);
+}
+
+.exercise-form-item.has-sets {
+    border-color: var(--success-color);
+}
+
+/* ===== MODO OSCURO ===== */
+@media (prefers-color-scheme: dark) {
+    .workout-item,
+    .weight-record,
+    .exercise-form-item {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .workout-item:hover,
+    .weight-record:hover,
+    .exercise-form-item:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--primary-color);
+    }
+    
+    .set-form-row {
+        background: rgba(255, 255, 255, 0.03);
+    }
+    
+    .pr-item {
+        background: rgba(255, 255, 255, 0.03);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* ===== EFECTOS HOVER MEJORADOS ===== */
+.workout-item:hover .workout-actions,
+.weight-record:hover .weight-actions {
+    opacity: 1;
+}
+
+.workout-actions,
+.weight-actions {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* ===== MEJORAS DE ACCESIBILIDAD ===== */
+@media (prefers-reduced-motion: reduce) {
+    .workout-item,
+    .weight-record,
+    .exercise-form-item {
+        animation: none;
+        transition: none;
+    }
+    
+    .workout-item:hover,
+    .weight-record:hover {
+        transform: none;
+    }
+}
+
+/* ===== FOCUS STATES ===== */
+.workout-actions .btn:focus,
+.weight-actions .btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ===== UTILIDADES ESPECÍFICAS ===== */
+.volume-indicator {
+    background: linear-gradient(90deg, var(--success-color), var(--info-color));
+    color: white;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.pr-indicator {
+    background: linear-gradient(90deg, var(--warning-color), var(--danger-color));
+    color: white;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.muscle-group-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.muscle-group-indicator.chest { background-color: #ef4444; }
+.muscle-group-indicator.back { background-color: #3b82f6; }
+.muscle-group-indicator.shoulders { background-color: #f59e0b; }
+.muscle-group-indicator.arms { background-color: #8b5cf6; }
+.muscle-group-indicator.legs { background-color: #10b981; }
+.muscle-group-indicator.core { background-color: #ec4899; }

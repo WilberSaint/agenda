@@ -26,6 +26,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="css/base.css" rel="stylesheet">
     <link href="css/habits.css" rel="stylesheet">
+    <link href="css/gym.css" rel="stylesheet">
+    <link href="css/goals.css" rel="stylesheet">
     <link id="theme-css" href="css/themes/masculine.css" rel="stylesheet">
     <link href="css/responsive.css" rel="stylesheet">
 </head>
@@ -101,21 +103,18 @@
                         <a class="nav-link disabled" href="#" data-module="goals">
                             <i class="fas fa-bullseye me-2"></i>
                             <span>Metas</span>
-                            <small class="badge bg-secondary ms-auto">Próximamente</small>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#" data-module="gym">
                             <i class="fas fa-dumbbell me-2"></i>
                             <span>Gimnasio</span>
-                            <small class="badge bg-secondary ms-auto">Próximamente</small>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#" data-module="dashboard">
                             <i class="fas fa-chart-line me-2"></i>
                             <span>Dashboard</span>
-                            <small class="badge bg-secondary ms-auto">Próximamente</small>
                         </a>
                     </li>
                 </ul>
@@ -707,22 +706,741 @@
 </div>
 
 
-             <!-- Modulo de Metas -->
-            <div id="module-goals" class="module-content">
-                <div class="text-center py-5">
-                    <i class="fas fa-bullseye fa-4x text-muted mb-3"></i>
-                    <h3>Módulo de Metas</h3>
-                    <p class="text-muted">Próximamente disponible</p>
+<!-- Module: Metas -->
+<div id="module-goals" class="module-content">
+    <!-- Vista de resumen de metas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-primary">
+                    <h5 class="mb-0">
+                        <i class="fas fa-target me-2"></i>
+                        Resumen de Metas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="urgentGoalsSummary">
+                                <!-- Metas urgentes se generarán aquí -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="recentMilestonesSummary">
+                                <!-- Milestones recientes se generarán aquí -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Modulo de Gimnasio -->
-            <div id="module-gym" class="module-content">
-                <div class="text-center py-5">
-                    <i class="fas fa-dumbbell fa-4x text-muted mb-3"></i>
-                    <h3>Módulo de Gimnasio</h3>
-                    <p class="text-muted">Próximamente disponible</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Sidebar para formularios -->
+        <div class="col-lg-4 col-md-5">
+            <!-- Pestañas para formularios -->
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-success">
+                    <ul class="nav nav-pills card-header-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="goal-form-tab" data-bs-toggle="tab" data-bs-target="#goal-form" type="button" role="tab">
+                                <i class="fas fa-bullseye me-1"></i>
+                                <span class="d-none d-sm-inline">Meta</span>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="milestone-form-tab" data-bs-toggle="tab" data-bs-target="#milestone-form" type="button" role="tab">
+                                <i class="fas fa-flag-checkered me-1"></i>
+                                <span class="d-none d-sm-inline">Milestone</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card-body">
+                    <div class="tab-content">
+                        <!-- Formulario de metas -->
+                        <div class="tab-pane fade show active" id="goal-form" role="tabpanel">
+                            <h6 class="mb-3">
+                                <i class="fas fa-plus me-2"></i>
+                                Nueva Meta
+                            </h6>
+                            <form id="goalForm">
+                                <div class="mb-3">
+                                    <label for="goalTitle" class="form-label required">Título de la meta</label>
+                                    <input type="text" class="form-control app-input" id="goalTitle" required
+                                           placeholder="Ej: Aprender francés, Correr 5km...">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="goalDescription" class="form-label">Descripción</label>
+                                    <textarea class="form-control app-input" id="goalDescription" rows="2"
+                                              placeholder="Describe tu meta en detalle..."></textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="goalType" class="form-label required">Tipo de meta</label>
+                                    <select class="form-select app-input" id="goalType" required>
+                                        <option value="">Seleccionar tipo...</option>
+                                        <option value="binary">Binaria (Sí/No)</option>
+                                        <option value="quantifiable">Cuantificable (Con progreso numérico)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="goalCategory" class="form-label required">Categoría</label>
+                                    <select class="form-select app-input" id="goalCategory" required>
+                                        <option value="">Seleccionar categoría...</option>
+                                        <option value="personal">Personal</option>
+                                        <option value="professional">Profesional</option>
+                                        <option value="health">Salud</option>
+                                        <option value="financial">Financiero</option>
+                                        <option value="education">Educación</option>
+                                        <option value="relationships">Relaciones</option>
+                                        <option value="hobby">Pasatiempos</option>
+                                        <option value="travel">Viajes</option>
+                                        <option value="other">Otros</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="goalPriority" class="form-label required">Prioridad</label>
+                                    <select class="form-select app-input" id="goalPriority" required>
+                                        <option value="">Seleccionar prioridad...</option>
+                                        <option value="baja">Baja</option>
+                                        <option value="media" selected>Media</option>
+                                        <option value="alta">Alta</option>
+                                        <option value="urgente">Urgente</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="goalStartDate" class="form-label">Fecha de inicio</label>
+                                        <input type="date" class="form-control app-input" id="goalStartDate">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="goalDeadline" class="form-label required">Fecha límite</label>
+                                        <input type="date" class="form-control app-input" id="goalDeadline" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Sección para metas cuantificables -->
+                                <div id="quantifiableSection" style="display: none;">
+                                    <div class="row mt-3">
+                                        <div class="col-4">
+                                            <label for="goalCurrentValue" class="form-label">Valor actual</label>
+                                            <input type="number" class="form-control app-input" id="goalCurrentValue" 
+                                                   min="0" step="0.1" value="0">
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="goalTargetValue" class="form-label">Objetivo</label>
+                                            <input type="number" class="form-control app-input" id="goalTargetValue" 
+                                                   min="0.1" step="0.1">
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="goalUnit" class="form-label">Unidad</label>
+                                            <input type="text" class="form-control app-input" id="goalUnit" 
+                                                   placeholder="kg, km, hrs...">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-gradient w-100 mt-3">
+                                    <i class="fas fa-save me-2"></i>
+                                    Crear Meta
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Formulario de milestones -->
+                        <div class="tab-pane fade" id="milestone-form" role="tabpanel">
+                            <h6 class="mb-3">
+                                <i class="fas fa-plus me-2"></i>
+                                Nuevo Milestone
+                            </h6>
+                            <form id="milestoneForm">
+                                <div class="mb-3">
+                                    <label for="milestoneGoalSelect" class="form-label required">Seleccionar meta</label>
+                                    <select class="form-select app-input" id="milestoneGoalSelect" required>
+                                        <option value="">Seleccionar meta...</option>
+                                        <!-- Las metas activas se cargarán aquí -->
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="milestoneTitle" class="form-label required">Título del milestone</label>
+                                    <input type="text" class="form-control app-input" id="milestoneTitle" required
+                                           placeholder="Ej: Completar primera semana...">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="milestoneDescription" class="form-label">Descripción</label>
+                                    <textarea class="form-control app-input" id="milestoneDescription" rows="2"
+                                              placeholder="Describe este paso intermedio..."></textarea>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="milestoneDeadline" class="form-label">Fecha límite (opcional)</label>
+                                    <input type="date" class="form-control app-input" id="milestoneDeadline">
+                                </div>
+                                
+                                <button type="submit" class="btn btn-gradient w-100">
+                                    <i class="fas fa-save me-2"></i>
+                                    Agregar Milestone
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Filtros -->
+            <div class="card app-card shadow-sm mt-3">
+                <div class="card-header card-header-info">
+                    <h6 class="mb-0">
+                        <i class="fas fa-filter me-2"></i>
+                        Filtros
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterGoalStatus">
+                            <option value="">Todos los estados</option>
+                            <option value="planning">Planificando</option>
+                            <option value="active">Activo</option>
+                            <option value="paused">Pausado</option>
+                            <option value="completed">Completado</option>
+                            <option value="cancelled">Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterGoalCategory">
+                            <option value="">Todas las categorías</option>
+                            <option value="personal">Personal</option>
+                            <option value="professional">Profesional</option>
+                            <option value="health">Salud</option>
+                            <option value="financial">Financiero</option>
+                            <option value="education">Educación</option>
+                            <option value="relationships">Relaciones</option>
+                            <option value="hobby">Pasatiempos</option>
+                            <option value="travel">Viajes</option>
+                            <option value="other">Otros</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterGoalPriority">
+                            <option value="">Todas las prioridades</option>
+                            <option value="urgente">Urgente</option>
+                            <option value="alta">Alta</option>
+                            <option value="media">Media</option>
+                            <option value="baja">Baja</option>
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="filterCompletedGoals">
+                        <label class="form-check-label" for="filterCompletedGoals">
+                            Mostrar completadas
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de metas -->
+        <div class="col-lg-8 col-md-7">
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-warning">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-bullseye me-2"></i>
+                            Mis Metas
+                        </h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-secondary" id="archiveCompletedGoals">
+                                <i class="fas fa-archive me-1"></i>
+                                <span class="d-none d-sm-inline">Archivar completadas</span>
+                            </button>
+                            <button class="btn btn-sm btn-info" id="exportGoals">
+                                <i class="fas fa-download me-1"></i>
+                                <span class="d-none d-sm-inline">Exportar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <div id="goalsStats" class="alert app-alert border mb-3">
+                        <div class="row text-center">
+                            <div class="col-3">
+                                <div class="stat-number" id="totalGoals">0</div>
+                                <div class="stat-label">Total</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="stat-number text-primary" id="activeGoals">0</div>
+                                <div class="stat-label">Activas</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="stat-number text-success" id="completedGoals">0</div>
+                                <div class="stat-label">Completadas</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="stat-number text-danger" id="urgentGoals">0</div>
+                                <div class="stat-label">Urgentes</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="goalsList" class="goals-container">
+                        <!-- Las metas se mostrarán aquí -->
+                    </div>
+                    
+                    <div id="emptyGoalsState" class="text-center py-5 text-muted" style="display: none;">
+                        <i class="fas fa-bullseye fa-3x mb-3 text-primary"></i>
+                        <h5>No hay metas creadas</h5>
+                        <p>Crea tu primera meta para comenzar a alcanzar tus objetivos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar meta -->
+<div class="modal fade" id="editGoalModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content app-modal">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit me-2"></i>
+                    Editar Meta
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editGoalForm">
+                    <input type="hidden" id="editGoalId">
+                    
+                    <div class="mb-3">
+                        <label for="editGoalTitle" class="form-label required">Título de la meta</label>
+                        <input type="text" class="form-control app-input" id="editGoalTitle" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editGoalDescription" class="form-label">Descripción</label>
+                        <textarea class="form-control app-input" id="editGoalDescription" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editGoalType" class="form-label required">Tipo de meta</label>
+                        <select class="form-select app-input" id="editGoalType" required>
+                            <option value="">Seleccionar tipo...</option>
+                            <option value="binary">Binaria (Sí/No)</option>
+                            <option value="quantifiable">Cuantificable (Con progreso numérico)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editGoalCategory" class="form-label required">Categoría</label>
+                        <select class="form-select app-input" id="editGoalCategory" required>
+                            <option value="">Seleccionar categoría...</option>
+                            <option value="personal">Personal</option>
+                            <option value="professional">Profesional</option>
+                            <option value="health">Salud</option>
+                            <option value="financial">Financiero</option>
+                            <option value="education">Educación</option>
+                            <option value="relationships">Relaciones</option>
+                            <option value="hobby">Pasatiempos</option>
+                            <option value="travel">Viajes</option>
+                            <option value="other">Otros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="editGoalPriority" class="form-label required">Prioridad</label>
+                        <select class="form-select app-input" id="editGoalPriority" required>
+                            <option value="">Seleccionar prioridad...</option>
+                            <option value="baja">Baja</option>
+                            <option value="media">Media</option>
+                            <option value="alta">Alta</option>
+                            <option value="urgente">Urgente</option>
+                        </select>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="editGoalStartDate" class="form-label">Fecha de inicio</label>
+                            <input type="date" class="form-control app-input" id="editGoalStartDate">
+                        </div>
+                        <div class="col-6">
+                            <label for="editGoalDeadline" class="form-label required">Fecha límite</label>
+                            <input type="date" class="form-control app-input" id="editGoalDeadline" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección para metas cuantificables -->
+                    <div id="editQuantifiableSection" style="display: none;">
+                        <div class="row mt-3">
+                            <div class="col-4">
+                                <label for="editGoalCurrentValue" class="form-label">Valor actual</label>
+                                <input type="number" class="form-control app-input" id="editGoalCurrentValue" 
+                                       min="0" step="0.1">
+                            </div>
+                            <div class="col-4">
+                                <label for="editGoalTargetValue" class="form-label">Objetivo</label>
+                                <input type="number" class="form-control app-input" id="editGoalTargetValue" 
+                                       min="0.1" step="0.1">
+                            </div>
+                            <div class="col-4">
+                                <label for="editGoalUnit" class="form-label">Unidad</label>
+                                <input type="text" class="form-control app-input" id="editGoalUnit">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-gradient" id="saveEditGoal">
+                    <i class="fas fa-save me-1"></i>
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Module: Gimnasio -->
+<div id="module-gym" class="module-content">
+    <!-- Vista de estadísticas rápidas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-primary">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-line me-2"></i>
+                        Resumen de Entrenamientos
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="quickGymStats">
+                        <!-- Las estadísticas rápidas se generarán aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Sidebar para agregar entrenamientos -->
+        <div class="col-lg-4 col-md-5">
+            <!-- Formulario de entrenamiento -->
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-success">
+                    <h5 class="mb-0">
+                        <i class="fas fa-plus me-2"></i>
+                        Nuevo Entrenamiento
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form id="workoutForm">
+                        <div class="mb-3">
+                            <label for="workoutName" class="form-label">Nombre del entrenamiento</label>
+                            <input type="text" class="form-control app-input" id="workoutName" required 
+                                   placeholder="Ej: Push Day, Piernas, etc.">
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-8">
+                                <label for="workoutDate" class="form-label">Fecha</label>
+                                <input type="date" class="form-control app-input" id="workoutDate">
+                            </div>
+                            <div class="col-4">
+                                <label for="workoutDuration" class="form-label">Duración (min)</label>
+                                <input type="number" class="form-control app-input" id="workoutDuration" 
+                                       min="1" value="60">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 mt-3">
+                            <label for="workoutNotes" class="form-label">Notas (opcional)</label>
+                            <textarea class="form-control app-input" id="workoutNotes" rows="2" 
+                                      placeholder="Cómo te sentiste, observaciones..."></textarea>
+                        </div>
+                        
+                        <!-- Sección para agregar ejercicios -->
+                        <div class="mb-3">
+                            <label class="form-label">Agregar Ejercicios</label>
+                            <div class="row">
+                                <div class="col-8">
+                                    <select class="form-select app-input" id="exerciseName">
+                                        <option value="">Seleccionar ejercicio...</option>
+                                        <optgroup label="Pecho">
+                                            <option value="Press Banca" data-category="chest">Press Banca</option>
+                                            <option value="Press Inclinado" data-category="chest">Press Inclinado</option>
+                                            <option value="Press Declinado" data-category="chest">Press Declinado</option>
+                                            <option value="Flexiones" data-category="chest">Flexiones</option>
+                                            <option value="Aperturas" data-category="chest">Aperturas</option>
+                                            <option value="Fondos" data-category="chest">Fondos</option>
+                                        </optgroup>
+                                        <optgroup label="Espalda">
+                                            <option value="Dominadas" data-category="back">Dominadas</option>
+                                            <option value="Remo con Barra" data-category="back">Remo con Barra</option>
+                                            <option value="Jalones" data-category="back">Jalones</option>
+                                            <option value="Remo con Mancuerna" data-category="back">Remo con Mancuerna</option>
+                                            <option value="Peso Muerto" data-category="back">Peso Muerto</option>
+                                            <option value="Pullover" data-category="back">Pullover</option>
+                                        </optgroup>
+                                        <optgroup label="Hombros">
+                                            <option value="Press Militar" data-category="shoulders">Press Militar</option>
+                                            <option value="Press con Mancuernas" data-category="shoulders">Press con Mancuernas</option>
+                                            <option value="Elevaciones Laterales" data-category="shoulders">Elevaciones Laterales</option>
+                                            <option value="Elevaciones Frontales" data-category="shoulders">Elevaciones Frontales</option>
+                                            <option value="Pájaros" data-category="shoulders">Pájaros</option>
+                                            <option value="Encogimientos" data-category="shoulders">Encogimientos</option>
+                                        </optgroup>
+                                        <optgroup label="Brazos">
+                                            <option value="Curl Bíceps" data-category="arms">Curl Bíceps</option>
+                                            <option value="Curl Martillo" data-category="arms">Curl Martillo</option>
+                                            <option value="Press Francés" data-category="arms">Press Francés</option>
+                                            <option value="Extensiones" data-category="arms">Extensiones</option>
+                                            <option value="Curl con Barra" data-category="arms">Curl con Barra</option>
+                                            <option value="Dips" data-category="arms">Dips</option>
+                                        </optgroup>
+                                        <optgroup label="Piernas">
+                                            <option value="Sentadillas" data-category="legs">Sentadillas</option>
+                                            <option value="Peso Muerto" data-category="legs">Peso Muerto</option>
+                                            <option value="Prensa" data-category="legs">Prensa</option>
+                                            <option value="Estocadas" data-category="legs">Estocadas</option>
+                                            <option value="Curl Femoral" data-category="legs">Curl Femoral</option>
+                                            <option value="Extensiones de Cuádriceps" data-category="legs">Extensiones de Cuádriceps</option>
+                                        </optgroup>
+                                        <optgroup label="Core">
+                                            <option value="Plancha" data-category="core">Plancha</option>
+                                            <option value="Abdominales" data-category="core">Abdominales</option>
+                                            <option value="Russian Twists" data-category="core">Russian Twists</option>
+                                            <option value="Mountain Climbers" data-category="core">Mountain Climbers</option>
+                                            <option value="Elevaciones de Piernas" data-category="core">Elevaciones de Piernas</option>
+                                            <option value="Dead Bug" data-category="core">Dead Bug</option>
+                                        </optgroup>
+                                    </select>
+                                    <input type="hidden" id="exerciseCategory">
+                                </div>
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-primary w-100" id="addExerciseToWorkout">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Lista de ejercicios agregados -->
+                        <div class="mb-3">
+                            <div id="workoutExercises">
+                                <!-- Los ejercicios se agregarán aquí dinámicamente -->
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-gradient w-100">
+                            <i class="fas fa-save me-2"></i>
+                            Guardar Entrenamiento
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Formulario de peso corporal -->
+            <div class="card app-card shadow-sm mt-3">
+                <div class="card-header card-header-info">
+                    <h6 class="mb-0">
+                        <i class="fas fa-weight me-2"></i>
+                        Registrar Peso Corporal
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <form id="bodyWeightForm">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="bodyWeight" class="form-label">Peso (kg)</label>
+                                <input type="number" class="form-control app-input" id="bodyWeight" 
+                                       min="20" max="300" step="0.1" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="weightDate" class="form-label">Fecha</label>
+                                <input type="date" class="form-control app-input" id="weightDate">
+                            </div>
+                        </div>
+                        <div class="mb-3 mt-2">
+                            <label for="weightNotes" class="form-label">Notas</label>
+                            <input type="text" class="form-control app-input" id="weightNotes" 
+                                   placeholder="Ej: En ayunas, después de entrenar...">
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-plus me-1"></i>
+                            Registrar Peso
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Gráfico de peso corporal -->
+            <div class="card app-card shadow-sm mt-3">
+                <div class="card-body">
+                    <div id="weightProgressChart">
+                        <!-- El gráfico se generará aquí -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros -->
+            <div class="card app-card shadow-sm mt-3">
+                <div class="card-header card-header-warning">
+                    <h6 class="mb-0">
+                        <i class="fas fa-filter me-2"></i>
+                        Filtros
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterMuscleGroup">
+                            <option value="">Todos los grupos</option>
+                            <option value="chest">Pecho</option>
+                            <option value="back">Espalda</option>
+                            <option value="shoulders">Hombros</option>
+                            <option value="arms">Brazos</option>
+                            <option value="legs">Piernas</option>
+                            <option value="core">Core</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterWorkoutType">
+                            <option value="">Todos los tipos</option>
+                            <option value="compound">Compuestos</option>
+                            <option value="isolation">Aislamiento</option>
+                            <option value="bodyweight">Peso corporal</option>
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="filterArchivedWorkouts">
+                        <label class="form-check-label" for="filterArchivedWorkouts">
+                            Mostrar archivados
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de entrenamientos -->
+        <div class="col-lg-8 col-md-7">
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-warning">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-dumbbell me-2"></i>
+                            Historial de Entrenamientos
+                        </h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-secondary" id="clearOldWorkouts">
+                                <i class="fas fa-broom me-1"></i>
+                                <span class="d-none d-sm-inline">Limpiar antiguos</span>
+                            </button>
+                            <button class="btn btn-sm btn-info" id="exportWorkouts">
+                                <i class="fas fa-download me-1"></i>
+                                <span class="d-none d-sm-inline">Exportar</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <div id="gymStats" class="alert app-alert border mb-3">
+                        <div class="row text-center">
+                            <div class="col-3">
+                                <div class="stat-number" id="totalWorkouts">0</div>
+                                <div class="stat-label">Total</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="stat-number text-success" id="workoutsThisWeek">0</div>
+                                <div class="stat-label">Esta Semana</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="stat-number text-warning" id="workoutsThisMonth">0</div>
+                                <div class="stat-label">Este Mes</div>
+                            </div>
+                            <div class="col-3">
+                                <div class="stat-number text-info" id="totalVolumeLifted">0</div>
+                                <div class="stat-label">Volumen Total (kg)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="workoutsList" class="workouts-container">
+                        <!-- Los entrenamientos se mostrarán aquí -->
+                    </div>
+                    
+                    <div id="emptyGymState" class="text-center py-5 text-muted" style="display: none;">
+                        <i class="fas fa-dumbbell fa-3x mb-3 text-primary"></i>
+                        <h5>No hay entrenamientos registrados</h5>
+                        <p>Registra tu primer entrenamiento para comenzar a trackear tu progreso</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar entrenamiento -->
+<div class="modal fade" id="editWorkoutModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content app-modal">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit me-2"></i>
+                    Editar Entrenamiento
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editWorkoutForm">
+                    <input type="hidden" id="editWorkoutId">
+                    <div class="mb-3">
+                        <label for="editWorkoutName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control app-input" id="editWorkoutName" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <label for="editWorkoutDate" class="form-label">Fecha</label>
+                            <input type="date" class="form-control app-input" id="editWorkoutDate">
+                        </div>
+                        <div class="col-4">
+                            <label for="editWorkoutDuration" class="form-label">Duración (min)</label>
+                            <input type="number" class="form-control app-input" id="editWorkoutDuration" min="1">
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="editWorkoutNotes" class="form-label">Notas</label>
+                        <textarea class="form-control app-input" id="editWorkoutNotes" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ejercicios</label>
+                        <div id="editWorkoutExercises">
+                            <!-- Los ejercicios se cargarán aquí -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-gradient" id="saveEditWorkout">
+                    <i class="fas fa-save me-1"></i>
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
             <div id="module-dashboard" class="module-content">
                 <div class="text-center py-5">
@@ -832,6 +1550,8 @@
     <script src="js/storage.js"></script>
     <script src="js/modules/agenda.js"></script>
     <script src="js/modules/habits.js"></script>
+    <script src="js/modules/gym.js"></script>
+    <script src="js/modules/goals.js"></script>
     <script src="js/app.js"></script>
     
     <!-- PWA Service Worker -->

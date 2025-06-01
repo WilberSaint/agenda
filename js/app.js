@@ -24,13 +24,15 @@ class AppController {
                 name: 'Metas',
                 icon: 'fas fa-bullseye',
                 active: false,
-                comingSoon: true
+                comingSoon: false,
+                initialized: false
             },
             gym: {
                 name: 'Gimnasio',
                 icon: 'fas fa-dumbbell',
                 active: false,
-                comingSoon: true
+                comingSoon: false,
+                initialized: false
             },
             dashboard: {
                 name: 'Dashboard',
@@ -121,50 +123,202 @@ class AppController {
     /**
      * Vincular todos los eventos de la aplicación
      */
-    bindEvents() {
-        // Navigation events
-        this.bindNavigationEvents();
-        
-        // Mobile events
-        this.bindMobileEvents();
-        
-        // Window events
-        this.bindWindowEvents();
-        
-        // Keyboard shortcuts
-        this.bindKeyboardShortcuts();
-        
-        // PWA events
-        this.bindPWAEvents();
-
-        // Event listeners para integración con hábitos (agregar en bindEvents())
-document.addEventListener('habitsHabitCompleted', (e) => {
-    console.log('🎉 Hábito completado:', e.detail.habit.name);
+bindEvents() {
+    // Navigation events
+    this.bindNavigationEvents();
     
-    // Opcional: Crear una tarea de celebración en la agenda
-    if (window.agenda && e.detail.habit) {
-        const celebrationTask = {
-            id: Date.now().toString(36) + Math.random().toString(36).substr(2),
-            title: `🎉 Completé: ${e.detail.habit.name}`,
-            description: `¡Felicidades! Completaste tu hábito de ${e.detail.habit.name}`,
-            type: 'recordatorio',
-            category: 'personal',
-            priority: 'baja',
-            date: new Date().toISOString().split('T')[0],
-            completed: true,
-            createdAt: new Date().toISOString()
-        };
-        
-        // Opcional: Auto-agregar a agenda (comentar si no se desea)
-        // window.agenda.tasks.unshift(celebrationTask);
-        // window.agenda.saveTasks();
-    }
-});
+    // Mobile events
+    this.bindMobileEvents();
+    
+    // Window events
+    this.bindWindowEvents();
+    
+    // Keyboard shortcuts
+    this.bindKeyboardShortcuts();
+    
+    // PWA events
+    this.bindPWAEvents();
 
-document.addEventListener('habitsModuleInitialized', () => {
-    console.log('✅ Módulo de Hábitos completamente inicializado');
-});
-    }
+    // ===== INTEGRACIÓN CON MÓDULO DE HÁBITOS =====
+    // Event listeners para integración con hábitos
+    document.addEventListener('habitsHabitCompleted', (e) => {
+        console.log('🎉 Hábito completado:', e.detail.habit.name);
+        
+        // Opcional: Crear una tarea de celebración en la agenda
+        if (window.agenda && e.detail.habit) {
+            const celebrationTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `🎉 Completé: ${e.detail.habit.name}`,
+                description: `¡Felicidades! Completaste tu hábito de ${e.detail.habit.name}`,
+                type: 'recordatorio',
+                category: 'personal',
+                priority: 'baja',
+                date: new Date().toISOString().split('T')[0],
+                completed: true,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Opcional: Auto-agregar a agenda (comentar si no se desea)
+            // window.agenda.tasks.unshift(celebrationTask);
+            // window.agenda.saveTasks();
+        }
+    });
+
+    document.addEventListener('habitsModuleInitialized', () => {
+        console.log('✅ Módulo de Hábitos completamente inicializado');
+    });
+
+    // ===== INTEGRACIÓN CON MÓDULO DE METAS =====
+    // Event listeners para integración con metas
+    document.addEventListener('goalsGoalCompleted', (e) => {
+        console.log('🎉 Meta completada:', e.detail.goal.title);
+        
+        // Crear tarea de celebración en agenda
+        if (window.agenda && e.detail.goal) {
+            const celebrationTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `🎉 Meta alcanzada: ${e.detail.goal.title}`,
+                description: `¡Felicidades! Has completado tu meta: ${e.detail.goal.description || e.detail.goal.title}`,
+                type: 'recordatorio',
+                category: 'personal',
+                priority: 'alta',
+                date: new Date().toISOString().split('T')[0],
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            window.agenda.tasks.unshift(celebrationTask);
+            window.agenda.saveTasks();
+            window.agenda.renderTasks();
+            window.agenda.updateStats();
+        }
+    });
+
+    document.addEventListener('goalsMilestoneCompleted', (e) => {
+        console.log('🏁 Milestone completado:', e.detail.milestone.title);
+        
+        // Opcional: Crear recordatorio para revisar progreso
+        if (window.agenda && e.detail.milestone && e.detail.goal) {
+            const reminderTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `🏁 Milestone completado: ${e.detail.milestone.title}`,
+                description: `¡Excelente progreso! Completaste un milestone de: ${e.detail.goal.title}`,
+                type: 'recordatorio',
+                category: 'personal',
+                priority: 'media',
+                date: new Date().toISOString().split('T')[0],
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Opcional: Auto-agregar a agenda (comentar si no se desea)
+            // window.agenda.tasks.unshift(reminderTask);
+            // window.agenda.saveTasks();
+            // window.agenda.renderTasks();
+            // window.agenda.updateStats();
+        }
+    });
+
+    document.addEventListener('goalsModuleInitialized', () => {
+        console.log('✅ Módulo de Metas completamente inicializado');
+    });
+
+    // ===== INTEGRACIÓN CON MÓDULO DE GIMNASIO =====
+    // Event listeners para integración con gimnasio
+    document.addEventListener('gymWorkoutAdded', (e) => {
+        console.log('💪 Nuevo entrenamiento agregado:', e.detail.workout.name);
+        
+        // Crear tarea de felicitación en agenda
+        if (window.agenda && e.detail.workout) {
+            const celebrationTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `💪 Entrenamiento completado: ${e.detail.workout.name}`,
+                description: `¡Excelente! Completaste ${e.detail.workout.exercises.length} ejercicios en ${e.detail.workout.duration} minutos. Volumen total: ${e.detail.workout.totalVolume.toFixed(0)}kg`,
+                type: 'recordatorio',
+                category: 'personal',
+                priority: 'baja',
+                date: new Date().toISOString().split('T')[0],
+                completed: true,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Opcional: Auto-agregar a agenda (comentar si no se desea)
+            // window.agenda.tasks.unshift(celebrationTask);
+            // window.agenda.saveTasks();
+            // window.agenda.renderTasks();
+            // window.agenda.updateStats();
+        }
+    });
+
+    document.addEventListener('gymBodyWeightAdded', (e) => {
+        console.log('⚖️ Peso corporal registrado:', e.detail.weight + 'kg');
+        
+        // Crear recordatorio para seguimiento si hay cambio significativo
+        if (window.agenda && e.detail.weight) {
+            const reminderTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `⚖️ Peso registrado: ${e.detail.weight}kg`,
+                description: `Peso corporal actualizado${e.detail.notes ? ': ' + e.detail.notes : ''}`,
+                type: 'recordatorio',
+                category: 'personal',
+                priority: 'baja',
+                date: new Date().toISOString().split('T')[0],
+                completed: true,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Opcional: Auto-agregar a agenda (comentar si no se desea)
+            // window.agenda.tasks.unshift(reminderTask);
+            // window.agenda.saveTasks();
+            // window.agenda.renderTasks();
+            // window.agenda.updateStats();
+        }
+    });
+
+    document.addEventListener('gymModuleInitialized', () => {
+        console.log('✅ Módulo de Gimnasio completamente inicializado');
+    });
+
+    // ===== INTEGRACIÓN CRUZADA ENTRE MÓDULOS =====
+    // Cuando se completa una tarea relacionada con ejercicio
+    document.addEventListener('agendaTaskCompleted', (e) => {
+        if (e.detail.task.category === 'personal' && 
+            (e.detail.task.title.toLowerCase().includes('ejercicio') || 
+             e.detail.task.title.toLowerCase().includes('gym') ||
+             e.detail.task.title.toLowerCase().includes('entrenar'))) {
+            console.log('💡 Sugerencia: Registra este entrenamiento en el módulo de Gimnasio');
+        }
+    });
+
+    // Cuando se completa un hábito relacionado con metas
+    document.addEventListener('habitsHabitCompleted', (e) => {
+        console.log('🔗 Hábito completado, verificando si está relacionado con alguna meta...');
+        // Aquí se podría implementar lógica para actualizar progreso de metas relacionadas
+    });
+
+    // ===== EVENT LISTENER PARA SELECCIÓN DE EJERCICIOS =====
+    // Script para manejar la selección de ejercicios
+    document.addEventListener('DOMContentLoaded', function() {
+        const exerciseSelect = document.getElementById('exerciseName');
+        const categoryInput = document.getElementById('exerciseCategory');
+        
+        if (exerciseSelect && categoryInput) {
+            exerciseSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const category = selectedOption.getAttribute('data-category') || '';
+                categoryInput.value = category;
+            });
+        }
+        
+        // Establecer fecha de hoy para el peso corporal
+        const weightDate = document.getElementById('weightDate');
+        if (weightDate) {
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            weightDate.value = todayStr;
+        }
+    });
+}
 
     /**
      * Eventos de navegación
@@ -454,15 +608,35 @@ document.addEventListener('habitsModuleInitialized', () => {
     }
     }
 
-    initializeGoalsModule() {
-        console.log('🎯 Inicializando módulo de Metas...');
-        // TODO: Implementar cuando creemos el módulo
-    }
 
-    initializeGymModule() {
-        console.log('💪 Inicializando módulo de Gimnasio...');
-        // TODO: Implementar cuando creemos el módulo
+initializeGoalsModule() {
+    console.log('🎯 Inicializando módulo de Metas...');
+    
+    // Verificar si el módulo de metas está disponible
+    if (window.goals && typeof window.goals.init === 'function') {
+        if (!window.goals.isInitialized) {
+            window.goals.init();
+        }
+        console.log('✅ Módulo de Metas inicializado correctamente');
+    } else {
+        console.warn('⚠️ Módulo de Metas no encontrado');
     }
+}
+
+// 2. ACTUALIZAR app.js - Método initializeGymModule():
+initializeGymModule() {
+    console.log('💪 Inicializando módulo de Gimnasio...');
+    
+    // Verificar si el módulo de gimnasio está disponible
+    if (window.gym && typeof window.gym.init === 'function') {
+        if (!window.gym.isInitialized) {
+            window.gym.init();
+        }
+        console.log('✅ Módulo de Gimnasio inicializado correctamente');
+    } else {
+        console.warn('⚠️ Módulo de Gimnasio no encontrado');
+    }
+}
 
     initializeDashboardModule() {
         console.log('📊 Inicializando Dashboard...');
