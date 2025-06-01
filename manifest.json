@@ -132,6 +132,19 @@
       ]
     },
     {
+      "name": "Finanzas",
+      "short_name": "Dinero",
+      "description": "Gestionar presupuesto y transacciones",
+      "url": "/agenda/?module=finances",
+      "icons": [
+        {
+          "src": "/agenda/assets/icons/shortcut-finances.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
       "name": "Dashboard",
       "short_name": "Resumen",
       "description": "Ver resumen de progreso general",

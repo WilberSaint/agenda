@@ -28,6 +28,7 @@
     <link href="css/habits.css" rel="stylesheet">
     <link href="css/gym.css" rel="stylesheet">
     <link href="css/goals.css" rel="stylesheet">
+    <link href="css/finances.css" rel="stylesheet">
     <link id="theme-css" href="css/themes/masculine.css" rel="stylesheet">
     <link href="css/responsive.css" rel="stylesheet">
 </head>
@@ -105,12 +106,20 @@
                             <span>Metas</span>
                         </a>
                     </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-module="gym">
                             <i class="fas fa-dumbbell me-2"></i>
                             <span>Gimnasio</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-module="finances">
+                           <i class="fas fa-wallet me-2"></i>
+                           <span>Finanzas</span>
+                        </a>
+                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#" data-module="dashboard">
                             <i class="fas fa-chart-line me-2"></i>
@@ -1442,6 +1451,613 @@
     </div>
 </div>
 
+
+<!-- Module: Finanzas -->
+<div id="module-finances" class="module-content">
+    <!-- Dashboard financiero -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-primary">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-pie me-2"></i>
+                        Dashboard Financiero
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div id="financesDashboard">
+                        <!-- El dashboard se generará aquí dinámicamente -->
+                        <div class="financial-summary">
+                            <h5><i class="fas fa-wallet me-2"></i>Resumen del Mes</h5>
+                            <div class="summary-grid">
+                                <div class="summary-item">
+                                    <div class="summary-amount">$0</div>
+                                    <div class="summary-label">Ingresos</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-amount">$0</div>
+                                    <div class="summary-label">Gastos</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-amount">$0</div>
+                                    <div class="summary-label">Balance</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-amount">$0</div>
+                                    <div class="summary-label">Ahorros</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Sidebar para formularios -->
+        <div class="col-lg-4 col-md-5">
+            <!-- Pestañas para diferentes formularios -->
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-success">
+                    <ul class="nav nav-pills card-header-tabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="transaction-form-tab" data-bs-toggle="tab" data-bs-target="#transaction-form" type="button" role="tab">
+                                <i class="fas fa-exchange-alt me-1"></i>
+                                <span class="d-none d-sm-inline">Transacción</span>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="budget-form-tab" data-bs-toggle="tab" data-bs-target="#budget-form" type="button" role="tab">
+                                <i class="fas fa-calculator me-1"></i>
+                                <span class="d-none d-sm-inline">Presupuesto</span>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="savings-form-tab" data-bs-toggle="tab" data-bs-target="#savings-form" type="button" role="tab">
+                                <i class="fas fa-piggy-bank me-1"></i>
+                                <span class="d-none d-sm-inline">Ahorro</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card-body">
+                    <div class="tab-content">
+                        <!-- Formulario de transacciones -->
+                        <div class="tab-pane fade show active" id="transaction-form" role="tabpanel">
+                            <h6 class="mb-3">
+                                <i class="fas fa-plus me-2"></i>
+                                Nueva Transacción
+                            </h6>
+                            <form id="transactionForm">
+                                <div class="mb-3">
+                                    <label for="transactionType" class="form-label required">Tipo</label>
+                                    <select class="form-select app-input" id="transactionType" name="type" required>
+                                        <option value="">Seleccionar tipo...</option>
+                                        <option value="expense">Gasto</option>
+                                        <option value="income">Ingreso</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="transactionAmount" class="form-label required">Monto</label>
+                                    <div class="currency-input">
+                                        <input type="number" class="form-control app-input" id="transactionAmount" name="amount" 
+                                               min="0" step="0.01" required placeholder="0.00">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="transactionCategory" class="form-label required">Categoría</label>
+                                    <select class="form-select app-input" id="transactionCategory" name="category" required>
+                                        <option value="">Seleccionar categoría...</option>
+                                        <!-- Las opciones se llenarán dinámicamente -->
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="transactionDescription" class="form-label required">Descripción</label>
+                                    <input type="text" class="form-control app-input" id="transactionDescription" name="description" 
+                                           required placeholder="¿En qué gastaste/ganaste?">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="transactionDate" class="form-label required">Fecha</label>
+                                    <input type="date" class="form-control app-input" id="transactionDate" name="date" required>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="transactionAccount" class="form-label">Cuenta</label>
+                                    <select class="form-select app-input" id="transactionAccount" name="account">
+                                        <option value="efectivo">Efectivo</option>
+                                        <option value="banco">Cuenta Bancaria</option>
+                                        <option value="tarjeta">Tarjeta de Crédito</option>
+                                        <option value="ahorros">Cuenta de Ahorros</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="transactionTags" class="form-label">Etiquetas (opcional)</label>
+                                    <input type="text" class="form-control app-input" id="transactionTags" name="tags" 
+                                           placeholder="Separar con comas">
+                                    <small class="form-text text-muted">Ej: supermercado, gasolina, trabajo</small>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-gradient w-100">
+                                    <i class="fas fa-save me-2"></i>
+                                    Guardar Transacción
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Formulario de presupuesto -->
+                        <div class="tab-pane fade" id="budget-form" role="tabpanel">
+                            <h6 class="mb-3">
+                                <i class="fas fa-plus me-2"></i>
+                                Nuevo Presupuesto
+                            </h6>
+                            <form id="budgetForm">
+                                <div class="mb-3">
+                                    <label for="budgetName" class="form-label required">Nombre del presupuesto</label>
+                                    <input type="text" class="form-control app-input" id="budgetName" name="name" required 
+                                           placeholder="Ej: Presupuesto Enero 2025">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="budgetPeriod" class="form-label required">Período</label>
+                                    <select class="form-select app-input" id="budgetPeriod" name="period" required>
+                                        <option value="">Seleccionar período...</option>
+                                        <option value="weekly">Semanal</option>
+                                        <option value="monthly" selected>Mensual</option>
+                                        <option value="yearly">Anual</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="budgetTotalAmount" class="form-label required">Monto total</label>
+                                    <div class="currency-input">
+                                        <input type="number" class="form-control app-input" id="budgetTotalAmount" name="totalAmount" 
+                                               min="1" step="0.01" required placeholder="0.00">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="budgetStartDate" class="form-label required">Fecha de inicio</label>
+                                    <input type="date" class="form-control app-input" id="budgetStartDate" name="startDate" required>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-gradient w-100">
+                                    <i class="fas fa-save me-2"></i>
+                                    Crear Presupuesto
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Formulario de metas de ahorro -->
+                        <div class="tab-pane fade" id="savings-form" role="tabpanel">
+                            <h6 class="mb-3">
+                                <i class="fas fa-plus me-2"></i>
+                                Nueva Meta de Ahorro
+                            </h6>
+                            <form id="savingsForm">
+                                <div class="mb-3">
+                                    <label for="savingsName" class="form-label required">Nombre de la meta</label>
+                                    <input type="text" class="form-control app-input" id="savingsName" name="name" required 
+                                           placeholder="Ej: Vacaciones, Fondo de emergencia">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="savingsTargetAmount" class="form-label required">Meta a alcanzar</label>
+                                    <div class="currency-input">
+                                        <input type="number" class="form-control app-input" id="savingsTargetAmount" name="targetAmount" 
+                                               min="1" step="0.01" required placeholder="0.00">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="savingsCurrentAmount" class="form-label">Monto actual</label>
+                                    <div class="currency-input">
+                                        <input type="number" class="form-control app-input" id="savingsCurrentAmount" name="currentAmount" 
+                                               min="0" step="0.01" placeholder="0.00">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="savingsTargetDate" class="form-label">Fecha objetivo (opcional)</label>
+                                    <input type="date" class="form-control app-input" id="savingsTargetDate" name="targetDate">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="savingsCategory" class="form-label">Categoría</label>
+                                    <select class="form-select app-input" id="savingsCategory" name="category">
+                                        <option value="emergency">Fondo de emergencia</option>
+                                        <option value="vacation">Vacaciones</option>
+                                        <option value="car">Automóvil</option>
+                                        <option value="house">Casa</option>
+                                        <option value="education">Educación</option>
+                                        <option value="retirement">Retiro</option>
+                                        <option value="general">General</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="savingsDescription" class="form-label">Descripción (opcional)</label>
+                                    <textarea class="form-control app-input" id="savingsDescription" name="description" rows="2" 
+                                              placeholder="Describe tu meta de ahorro..."></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-gradient w-100">
+                                    <i class="fas fa-save me-2"></i>
+                                    Crear Meta
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros -->
+            <div class="card app-card shadow-sm mt-3">
+                <div class="card-header card-header-info">
+                    <h6 class="mb-0">
+                        <i class="fas fa-filter me-2"></i>
+                        Filtros
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterTransactionType">
+                            <option value="">Todos los tipos</option>
+                            <option value="income">Ingresos</option>
+                            <option value="expense">Gastos</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterCategory">
+                            <option value="">Todas las categorías</option>
+                            <!-- Se llenarán dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <select class="form-select form-select-sm app-input" id="filterDateRange">
+                            <option value="">Todo el período</option>
+                            <option value="week">Última semana</option>
+                            <option value="month">Este mes</option>
+                            <option value="quarter">Este trimestre</option>
+                            <option value="year">Este año</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acciones rápidas -->
+            <div class="card app-card shadow-sm mt-3">
+                <div class="card-header card-header-warning">
+                    <h6 class="mb-0">
+                        <i class="fas fa-bolt me-2"></i>
+                        Acciones Rápidas
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" id="exportFinances">
+                            <i class="fas fa-download me-2"></i>
+                            Exportar Datos
+                        </button>
+                        <button class="btn btn-outline-info" id="generateReport">
+                            <i class="fas fa-chart-line me-2"></i>
+                            Generar Reporte
+                        </button>
+                        <button class="btn btn-outline-warning" id="clearOldFinances">
+                            <i class="fas fa-broom me-2"></i>
+                            Limpiar Antiguos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido principal con pestañas -->
+        <div class="col-lg-8 col-md-7">
+            <div class="card app-card shadow-sm">
+                <div class="card-header card-header-warning">
+                    <ul class="nav nav-tabs card-header-tabs" id="financeTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active app-tab" id="transactions-tab" data-bs-toggle="tab" data-bs-target="#transactions-content" type="button" role="tab">
+                                <i class="fas fa-list me-1"></i>
+                                <span class="d-none d-sm-inline">Transacciones</span>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link app-tab" id="budgets-tab" data-bs-toggle="tab" data-bs-target="#budgets-content" type="button" role="tab">
+                                <i class="fas fa-calculator me-1"></i>
+                                <span class="d-none d-sm-inline">Presupuestos</span>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link app-tab" id="savings-tab" data-bs-toggle="tab" data-bs-target="#savings-content" type="button" role="tab">
+                                <i class="fas fa-piggy-bank me-1"></i>
+                                <span class="d-none d-sm-inline">Metas</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card-body">
+                    <div class="tab-content" id="financeTabContent">
+                        <!-- Pestaña de transacciones -->
+                        <div class="tab-pane fade show active" id="transactions-content" role="tabpanel">
+                            <div id="transactionsList" class="finances-container">
+                                <!-- Las transacciones se mostrarán aquí -->
+                                <div class="empty-state">
+                                    <i class="fas fa-receipt fa-3x text-muted mb-3"></i>
+                                    <h5>No hay transacciones</h5>
+                                    <p class="text-muted">Agrega tu primera transacción para comenzar</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pestaña de presupuestos -->
+                        <div class="tab-pane fade" id="budgets-content" role="tabpanel">
+                            <div id="budgetsList" class="finances-container">
+                                <!-- Los presupuestos se mostrarán aquí -->
+                                <div class="empty-state">
+                                    <i class="fas fa-calculator fa-3x text-muted mb-3"></i>
+                                    <h5>No hay presupuestos</h5>
+                                    <p class="text-muted">Crea tu primer presupuesto para controlar tus gastos</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pestaña de metas de ahorro -->
+                        <div class="tab-pane fade" id="savings-content" role="tabpanel">
+                            <div id="savingsGoalsList" class="finances-container">
+                                <!-- Las metas de ahorro se mostrarán aquí -->
+                                <div class="empty-state">
+                                    <i class="fas fa-piggy-bank fa-3x text-muted mb-3"></i>
+                                    <h5>No hay metas de ahorro</h5>
+                                    <p class="text-muted">Establece tu primera meta de ahorro</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para agregar monto a meta de ahorro -->
+<div class="modal fade finances-modal" id="addSavingsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-plus-circle me-2"></i>
+                    Agregar a Meta de Ahorro
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addSavingsAmountForm">
+                    <input type="hidden" id="savingsGoalId">
+                    <div class="mb-3">
+                        <label for="savingsGoalName" class="form-label">Meta</label>
+                        <input type="text" class="form-control app-input" id="savingsGoalNameDisplay" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addSavingsAmount" class="form-label required">Monto a agregar</label>
+                        <div class="currency-input">
+                            <input type="number" class="form-control app-input" id="addSavingsAmount" 
+                                   min="0.01" step="0.01" required placeholder="0.00">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addSavingsNotes" class="form-label">Notas (opcional)</label>
+                        <input type="text" class="form-control app-input" id="addSavingsNotes" 
+                               placeholder="Ej: Ahorro del sueldo de enero">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-gradient" id="confirmAddSavings">
+                    <i class="fas fa-save me-1"></i>
+                    Agregar Monto
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar transacción -->
+<div class="modal fade finances-modal" id="editTransactionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit me-2"></i>
+                    Editar Transacción
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editTransactionForm">
+                    <input type="hidden" id="editTransactionId">
+                    <div class="mb-3">
+                        <label for="editTransactionType" class="form-label required">Tipo</label>
+                        <select class="form-select app-input" id="editTransactionType" required>
+                            <option value="expense">Gasto</option>
+                            <option value="income">Ingreso</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTransactionAmount" class="form-label required">Monto</label>
+                        <div class="currency-input">
+                            <input type="number" class="form-control app-input" id="editTransactionAmount" 
+                                   min="0" step="0.01" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTransactionCategory" class="form-label required">Categoría</label>
+                        <select class="form-select app-input" id="editTransactionCategory" required>
+                            <!-- Las opciones se llenarán dinámicamente -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTransactionDescription" class="form-label required">Descripción</label>
+                        <input type="text" class="form-control app-input" id="editTransactionDescription" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTransactionDate" class="form-label required">Fecha</label>
+                        <input type="date" class="form-control app-input" id="editTransactionDate" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTransactionAccount" class="form-label">Cuenta</label>
+                        <select class="form-select app-input" id="editTransactionAccount">
+                            <option value="efectivo">Efectivo</option>
+                            <option value="banco">Cuenta Bancaria</option>
+                            <option value="tarjeta">Tarjeta de Crédito</option>
+                            <option value="ahorros">Cuenta de Ahorros</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editTransactionTags" class="form-label">Etiquetas</label>
+                        <input type="text" class="form-control app-input" id="editTransactionTags" 
+                               placeholder="Separar con comas">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-gradient" id="saveEditTransaction">
+                    <i class="fas fa-save me-1"></i>
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar presupuesto -->
+<div class="modal fade finances-modal" id="editBudgetModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit me-2"></i>
+                    Editar Presupuesto
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editBudgetForm">
+                    <input type="hidden" id="editBudgetId">
+                    <div class="mb-3">
+                        <label for="editBudgetName" class="form-label required">Nombre</label>
+                        <input type="text" class="form-control app-input" id="editBudgetName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBudgetPeriod" class="form-label required">Período</label>
+                        <select class="form-select app-input" id="editBudgetPeriod" required>
+                            <option value="weekly">Semanal</option>
+                            <option value="monthly">Mensual</option>
+                            <option value="yearly">Anual</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBudgetTotalAmount" class="form-label required">Monto total</label>
+                        <div class="currency-input">
+                            <input type="number" class="form-control app-input" id="editBudgetTotalAmount" 
+                                   min="1" step="0.01" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editBudgetStartDate" class="form-label required">Fecha de inicio</label>
+                        <input type="date" class="form-control app-input" id="editBudgetStartDate" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-gradient" id="saveEditBudget">
+                    <i class="fas fa-save me-1"></i>
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar meta de ahorro -->
+<div class="modal fade finances-modal" id="editSavingsGoalModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit me-2"></i>
+                    Editar Meta de Ahorro
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editSavingsGoalForm">
+                    <input type="hidden" id="editSavingsGoalId">
+                    <div class="mb-3">
+                        <label for="editSavingsName" class="form-label required">Nombre</label>
+                        <input type="text" class="form-control app-input" id="editSavingsName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editSavingsTargetAmount" class="form-label required">Meta a alcanzar</label>
+                        <div class="currency-input">
+                            <input type="number" class="form-control app-input" id="editSavingsTargetAmount" 
+                                   min="1" step="0.01" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editSavingsCurrentAmount" class="form-label">Monto actual</label>
+                        <div class="currency-input">
+                            <input type="number" class="form-control app-input" id="editSavingsCurrentAmount" 
+                                   min="0" step="0.01">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editSavingsTargetDate" class="form-label">Fecha objetivo</label>
+                        <input type="date" class="form-control app-input" id="editSavingsTargetDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editSavingsCategory" class="form-label">Categoría</label>
+                        <select class="form-select app-input" id="editSavingsCategory">
+                            <option value="emergency">Fondo de emergencia</option>
+                            <option value="vacation">Vacaciones</option>
+                            <option value="car">Automóvil</option>
+                            <option value="house">Casa</option>
+                            <option value="education">Educación</option>
+                            <option value="retirement">Retiro</option>
+                            <option value="general">General</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editSavingsDescription" class="form-label">Descripción</label>
+                        <textarea class="form-control app-input" id="editSavingsDescription" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-gradient" id="saveEditSavingsGoal">
+                    <i class="fas fa-save me-1"></i>
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODULE DASHBOARD -->
+
             <div id="module-dashboard" class="module-content">
                 <div class="text-center py-5">
                     <i class="fas fa-chart-line fa-4x text-muted mb-3"></i>
@@ -1451,6 +2067,8 @@
             </div>
         </main>
     </div>
+<!-- FIN DE LOS MODULOS-->
+
 
     <!-- Sidebar Overlay para móvil -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
@@ -1539,6 +2157,11 @@
         </div>
     </div>
 
+
+
+
+
+
     <!-- Toast Container -->
     <div class="toast-container position-fixed top-0 end-0 p-3" id="toast-container">
         <!-- Toasts se generarán aquí -->
@@ -1552,6 +2175,7 @@
     <script src="js/modules/habits.js"></script>
     <script src="js/modules/gym.js"></script>
     <script src="js/modules/goals.js"></script>
+    <script src="js/modules/finances.js"></script>
     <script src="js/app.js"></script>
     
     <!-- PWA Service Worker -->

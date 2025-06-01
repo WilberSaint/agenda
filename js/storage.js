@@ -53,6 +53,24 @@ class StorageManager {
                 version: '1.0.0',
                 defaultValue: this.getDefaultAppState(),
                 validator: this.validateAppStateData.bind(this)
+            },
+            'finances-budgets': {
+                key: 'finances-budgets',
+                version: '1.0.0',
+                defaultValue: [],
+                validator: this.validateFinancesBudgetsData.bind(this)
+            },
+            'finances-transactions': {
+                 key: 'finances-transactions',
+                 version: '1.0.0',
+                 defaultValue: [],
+                 validator: this.validateFinancesTransactionsData.bind(this)
+            },
+            'finances-savings': {
+                 key: 'finances-savings',
+                 version: '1.0.0',
+                 defaultValue: [],
+                 validator: this.validateFinancesSavingsData.bind(this)
             }
         };
 
@@ -373,6 +391,25 @@ class StorageManager {
     validateGymData(data) {
         return Array.isArray(data) && data.every(session => 
             session.id && session.date && session.exercises
+        );
+    }
+
+    validateFinancesBudgetsData(data) {
+        return Array.isArray(data) && data.every(budget => 
+            budget.id && budget.name && budget.totalAmount && budget.period
+        );
+    }
+    
+    validateFinancesTransactionsData(data) {
+        return Array.isArray(data) && data.every(transaction => 
+            transaction.id && transaction.type && transaction.amount && 
+            transaction.category && transaction.date
+        );
+    }
+
+    validateFinancesSavingsData(data) {
+        return Array.isArray(data) && data.every(goal => 
+            goal.id && goal.name && goal.targetAmount >= 0
         );
     }
 

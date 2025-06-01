@@ -34,6 +34,13 @@ class AppController {
                 comingSoon: false,
                 initialized: false
             },
+            finances: {
+                name: 'Finanzas',
+                icon: 'fas fa-wallet',
+                active: false,
+                comingSoon: false,
+                initialized: false
+            },
             dashboard: {
                 name: 'Dashboard',
                 icon: 'fas fa-chart-line',
@@ -279,6 +286,135 @@ bindEvents() {
         console.log('✅ Módulo de Gimnasio completamente inicializado');
     });
 
+    // ===== INTEGRACIÓN CON MÓDULO DE FINANZAS =====
+    // Event listeners para integración con finanzas
+    document.addEventListener('financesTransactionAdded', (e) => {
+        console.log('💰 Nueva transacción:', e.detail.transaction);
+        
+        // Opcional: Crear recordatorio en agenda si es un gasto grande
+        if (window.agenda && e.detail.transaction.type === 'expense' && e.detail.transaction.amount > 1000) {
+            const reminderTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `💰 Gasto importante: ${e.detail.transaction.description}`,
+                description: `Registraste un gasto de $${e.detail.transaction.amount} en ${e.detail.transaction.category}. Considera revisar tu presupuesto.`,
+                type: 'recordatorio',
+                category: 'pagos',
+                priority: 'media',
+                date: new Date().toISOString().split('T')[0],
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Opcional: Auto-agregar a agenda (comentar si no se desea)
+            // window.agenda.tasks.unshift(reminderTask);
+            // window.agenda.saveTasks();
+            // window.agenda.renderTasks();
+            // window.agenda.updateStats();
+        }
+    });
+
+    document.addEventListener('financesBudgetAdded', (e) => {
+        console.log('📊 Nuevo presupuesto creado:', e.detail.budget.name);
+        
+        // Crear recordatorio para revisar presupuesto
+        if (window.agenda && e.detail.budget) {
+            const reminderTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `📊 Revisar presupuesto: ${e.detail.budget.name}`,
+                description: `Presupuesto de $${e.detail.budget.totalAmount} creado. Recuerda monitorear tus gastos.`,
+                type: 'recordatorio',
+                category: 'pagos',
+                priority: 'media',
+                date: new Date().toISOString().split('T')[0],
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Opcional: Auto-agregar a agenda (comentar si no se desea)
+            // window.agenda.tasks.unshift(reminderTask);
+            // window.agenda.saveTasks();
+            // window.agenda.renderTasks();
+            // window.agenda.updateStats();
+        }
+    });
+
+    document.addEventListener('financesBudgetExceeded', (e) => {
+        console.log('🚨 Presupuesto excedido:', e.detail.budget);
+        
+        // Crear tarea urgente en agenda
+        if (window.agenda && e.detail.budget) {
+            const alertTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `🚨 Presupuesto excedido: ${e.detail.budget.name}`,
+                description: `Tu presupuesto "${e.detail.budget.name}" ha sido excedido. Revisa tus gastos y ajusta tu presupuesto.`,
+                type: 'recordatorio',
+                category: 'pagos',
+                priority: 'urgente',
+                date: new Date().toISOString().split('T')[0],
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            window.agenda.tasks.unshift(alertTask);
+            window.agenda.saveTasks();
+            window.agenda.renderTasks();
+            window.agenda.updateStats();
+        }
+    });
+
+    document.addEventListener('financesSavingsGoalAdded', (e) => {
+        console.log('🎯 Nueva meta de ahorro:', e.detail.savingsGoal.name);
+        
+        // Crear recordatorio para revisar progreso de ahorro
+        if (window.agenda && e.detail.savingsGoal) {
+            const reminderTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `🎯 Meta de ahorro: ${e.detail.savingsGoal.name}`,
+                description: `Meta de $${e.detail.savingsGoal.targetAmount} creada. ¡Mantente enfocado en tu objetivo!`,
+                type: 'recordatorio',
+                category: 'personal',
+                priority: 'media',
+                date: new Date().toISOString().split('T')[0],
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            // Opcional: Auto-agregar a agenda (comentar si no se desea)
+            // window.agenda.tasks.unshift(reminderTask);
+            // window.agenda.saveTasks();
+            // window.agenda.renderTasks();
+            // window.agenda.updateStats();
+        }
+    });
+
+    document.addEventListener('financesSavingsGoalCompleted', (e) => {
+        console.log('🎉 Meta de ahorro completada:', e.detail.goal);
+        
+        // Crear tarea de celebración en agenda
+        if (window.agenda && e.detail.goal) {
+            const celebrationTask = {
+                id: Date.now().toString(36) + Math.random().toString(36).substr(2),
+                title: `🎉 Meta de ahorro alcanzada: ${e.detail.goal.name}`,
+                description: `¡Felicidades! Completaste tu meta de ahorro: ${e.detail.goal.name} por $${e.detail.goal.targetAmount}`,
+                type: 'recordatorio',
+                category: 'personal',
+                priority: 'alta',
+                date: new Date().toISOString().split('T')[0],
+                completed: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            window.agenda.tasks.unshift(celebrationTask);
+            window.agenda.saveTasks();
+            window.agenda.renderTasks();
+            window.agenda.updateStats();
+        }
+    });
+
+    document.addEventListener('financesModuleInitialized', () => {
+        console.log('✅ Módulo de Finanzas completamente inicializado');
+    });
+
     // ===== INTEGRACIÓN CRUZADA ENTRE MÓDULOS =====
     // Cuando se completa una tarea relacionada con ejercicio
     document.addEventListener('agendaTaskCompleted', (e) => {
@@ -288,17 +424,106 @@ bindEvents() {
              e.detail.task.title.toLowerCase().includes('entrenar'))) {
             console.log('💡 Sugerencia: Registra este entrenamiento en el módulo de Gimnasio');
         }
+
+        // Cuando se completa una tarea relacionada con dinero
+        if (e.detail.task.category === 'pagos' || 
+            e.detail.task.title.toLowerCase().includes('pagar') ||
+            e.detail.task.title.toLowerCase().includes('comprar') ||
+            e.detail.task.title.toLowerCase().includes('gasto')) {
+            console.log('💡 Sugerencia: Registra este gasto en el módulo de Finanzas');
+            
+            // Opcional: Mostrar notificación
+            if (window.ThemeManager) {
+                window.ThemeManager.createToast(
+                    '💡 ¿Registrar este gasto en Finanzas?', 
+                    'info', 
+                    'fas fa-wallet'
+                );
+            }
+        }
     });
 
     // Cuando se completa un hábito relacionado con metas
     document.addEventListener('habitsHabitCompleted', (e) => {
         console.log('🔗 Hábito completado, verificando si está relacionado con alguna meta...');
-        // Aquí se podría implementar lógica para actualizar progreso de metas relacionadas
+        
+        // Verificar si el hábito está relacionado con finanzas
+        if (e.detail.habit.name.toLowerCase().includes('ahorro') ||
+            e.detail.habit.name.toLowerCase().includes('dinero') ||
+            e.detail.habit.category === 'financial') {
+            console.log('💰 Hábito financiero completado, considera actualizar tus metas de ahorro');
+            
+            // Opcional: Mostrar notificación
+            if (window.ThemeManager) {
+                window.ThemeManager.createToast(
+                    '💰 ¡Buen hábito financiero! Revisa tus metas de ahorro', 
+                    'success', 
+                    'fas fa-piggy-bank'
+                );
+            }
+        }
     });
 
-    // ===== EVENT LISTENER PARA SELECCIÓN DE EJERCICIOS =====
-    // Script para manejar la selección de ejercicios
+    // Cuando se completa una meta relacionada con dinero
+    document.addEventListener('goalsGoalCompleted', (e) => {
+        if (e.detail.goal.category === 'financial') {
+            console.log('🎯 Meta financiera completada, considera crear una nueva meta de ahorro');
+            
+            // Opcional: Mostrar notificación
+            if (window.ThemeManager) {
+                window.ThemeManager.createToast(
+                    '🎯 Meta financiera completada! Crea una nueva en Finanzas', 
+                    'success', 
+                    'fas fa-wallet'
+                );
+            }
+        }
+    });
+
+    // ===== EVENT LISTENERS PARA ACCIONES RÁPIDAS DE FINANZAS =====
     document.addEventListener('DOMContentLoaded', function() {
+        // Exportar finanzas
+        const exportBtn = document.getElementById('exportFinances');
+        if (exportBtn) {
+            exportBtn.addEventListener('click', () => {
+                if (window.finances) {
+                    window.finances.exportTransactions();
+                } else {
+                    console.warn('Módulo de finanzas no está disponible');
+                }
+            });
+        }
+        
+        // Generar reporte
+        const reportBtn = document.getElementById('generateReport');
+        if (reportBtn) {
+            reportBtn.addEventListener('click', () => {
+                if (window.finances) {
+                    const report = window.finances.generateMonthlyReport();
+                    console.log('📈 Reporte generado:', report);
+                    if (window.ThemeManager) {
+                        window.ThemeManager.createToast('Reporte generado en consola', 'info', 'fas fa-chart-line');
+                    }
+                } else {
+                    console.warn('Módulo de finanzas no está disponible');
+                }
+            });
+        }
+        
+        // Limpiar transacciones antiguas
+        const clearBtn = document.getElementById('clearOldFinances');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                if (window.finances) {
+                    window.finances.clearOldTransactions();
+                } else {
+                    console.warn('Módulo de finanzas no está disponible');
+                }
+            });
+        }
+
+        // ===== EVENT LISTENER PARA SELECCIÓN DE EJERCICIOS =====
+        // Script para manejar la selección de ejercicios
         const exerciseSelect = document.getElementById('exerciseName');
         const categoryInput = document.getElementById('exerciseCategory');
         
@@ -317,8 +542,73 @@ bindEvents() {
             const todayStr = today.toISOString().split('T')[0];
             weightDate.value = todayStr;
         }
+
+        // ===== EVENT LISTENERS PARA FORMULARIOS DE FINANZAS =====
+        // Cambio de tipo de transacción para actualizar categorías
+        const transactionType = document.getElementById('transactionType');
+        if (transactionType) {
+            transactionType.addEventListener('change', (e) => {
+                if (window.finances) {
+                    window.finances.updateCategoryOptions(e.target.value);
+                }
+            });
+        }
+
+        // Período de presupuesto
+        const budgetPeriod = document.getElementById('budgetPeriod');
+        if (budgetPeriod) {
+            budgetPeriod.addEventListener('change', (e) => {
+                if (window.finances) {
+                    window.finances.currentBudgetPeriod = e.target.value;
+                    window.finances.updateDashboard();
+                }
+            });
+        }
+
+        // Filtros de finanzas
+        const financeFilters = ['filterTransactionType', 'filterCategory', 'filterDateRange'];
+        financeFilters.forEach(filterId => {
+            const element = document.getElementById(filterId);
+            if (element) {
+                element.addEventListener('change', () => {
+                    if (window.finances) {
+                        window.finances.renderTransactions();
+                    }
+                });
+            }
+        });
     });
+
+    // ===== FUNCIONES GLOBALES DE INTEGRACIÓN =====
+    // Función para agregar gasto rápido desde otros módulos
+    window.addQuickExpense = function(amount, description, category = 'other_expense') {
+        if (window.finances) {
+            return window.finances.addQuickExpense(amount, category, description);
+        }
+        console.warn('Módulo de finanzas no está disponible');
+        return null;
+    };
+
+    // Función para agregar ingreso rápido desde otros módulos
+    window.addQuickIncome = function(amount, description, category = 'other_income') {
+        if (window.finances) {
+            return window.finances.addQuickIncome(amount, category, description);
+        }
+        console.warn('Módulo de finanzas no está disponible');
+        return null;
+    };
+
+    // Función para obtener resumen financiero desde otros módulos
+    window.getFinancialSummary = function() {
+        if (window.finances) {
+            return window.finances.getFinancialSummary();
+        }
+        console.warn('Módulo de finanzas no está disponible');
+        return null;
+    };
 }
+//FIN DE bindEvents
+
 
     /**
      * Eventos de navegación
@@ -585,6 +875,9 @@ bindEvents() {
             case 'gym':
                 this.initializeGymModule();
                 break;
+            case 'finances':
+                this.initializeFinancesModule();
+                break;    
             case 'dashboard':
                 this.initializeDashboardModule();
                 break;
@@ -635,6 +928,20 @@ initializeGymModule() {
         console.log('✅ Módulo de Gimnasio inicializado correctamente');
     } else {
         console.warn('⚠️ Módulo de Gimnasio no encontrado');
+    }
+}
+
+initializeFinancesModule() {
+    console.log('💰 Inicializando módulo de Finanzas...');
+    
+    // Verificar si el módulo de finanzas está disponible
+    if (window.finances && typeof window.finances.init === 'function') {
+        if (!window.finances.isInitialized) {
+            window.finances.init();
+        }
+        console.log('✅ Módulo de Finanzas inicializado correctamente');
+    } else {
+        console.warn('⚠️ Módulo de Finanzas no encontrado');
     }
 }
 
